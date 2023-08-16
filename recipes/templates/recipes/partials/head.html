@@ -31,6 +31,7 @@
             --font-headings: 'Roboto Slab', serif;
 
             --spacing-gutter-lg: 4rem;
+            --spacing-gutter-md: 3rem;
             --spacing-gutter-sm: 2rem;
         }
 
@@ -171,6 +172,8 @@
         .recipe-author-container {
             padding: 0 var(--spacing-gutter-sm);
             color: var(--color-gray-4);
+            font-size: 1.3rem;
+            font-style: italic;
         }
 
         .recipe-author-item {
@@ -224,6 +227,15 @@
         .recipe-footer a:hover {
             filter: brightness(2);
             transition: all .2s ease-in-out;
+        }
+
+        .main-footer {
+            background-color: var(--color-primary-dark);
+        }
+
+        .main-footer-author {
+            color: var(--color-white);
+            padding: var(--spacing-gutter-md);
         }
     </style>
 </head>
