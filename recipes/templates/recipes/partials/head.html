@@ -19,7 +19,9 @@
 
         :root {
             --primary-color-dark: #13141e;
+            --primary-color: #76bfe9;
             --color-white: #fff;
+            --color-gray1: #fefe;
             --font-primary: sans-serif;
             --font-headings: 'Roboto Slab', serif;
             --spacing-gutter-large: 4rem;
@@ -38,6 +40,7 @@
         body {
             font-size: 1.6rem;
             font-family: var(--font-primary);
+            background-color: var(--color-gray1);
         }
 
         h1,
@@ -73,6 +76,44 @@
 
         .main-logo-icon {
             margin-right: 2rem;
+        }
+
+        .search-form {
+            position: relative;
+            max-width: 64rem;
+            margin: 0 auto;
+            border: 1px solid black;
+            border-radius: .4rem;
+        }
+
+        .search-form:focus-within {
+            border-color: var(--primary-color);
+            transition: .2s ease-out;
+        }
+
+        .search-input,
+        .search-button {
+            border: none;
+            background: none;
+            outline: none;
+            padding: 1rem;
+        }
+
+        .search-button {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            right: 0;
+        }
+
+        .search-form:focus-within .search-button {
+            color: var(--primary-color);
+            transition: .2s ease-out;
+        }
+
+        .search-input {
+            width: 100%;
+            padding-right: 3rem;
         }
     </style>
 </head>
