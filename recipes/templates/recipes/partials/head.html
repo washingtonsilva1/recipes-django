@@ -111,9 +111,27 @@
             transition: .2s ease-out;
         }
 
+        .search-button:focus {
+            outline: 1px solid rgba(0, 0, 0, .5);
+        }
+
         .search-input {
             width: 100%;
             padding-right: 3rem;
+        }
+
+        .main-content {
+            padding-top: 0;
+        }
+
+        .main-content-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: var(--spacing-gutter-large);
+        }
+
+        .temp {
+            height: 40rem;
         }
     </style>
 </head>
