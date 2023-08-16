@@ -130,8 +130,23 @@
             gap: var(--spacing-gutter-large);
         }
 
-        .temp {
-            height: 40rem;
+        .recipe {
+            background-color: var(--color-white);
+            box-shadow: -5px 5px 5px rgba(0, 0, 0, .2);
+        }
+
+        .recipe img {
+            max-width: 100%;
+        }
+
+        .recipe-list-item {
+            max-width: 64rem;
+            transition: .2s all;
+        }
+
+        .recipe-list-item:hover {
+            transform: scale(1.02);
+            transition: .2s all;
         }
     </style>
 </head>
