@@ -18,13 +18,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@900&display=swap');
 
         :root {
-            --primary-color-dark: #13141e;
-            --primary-color: #76bfe9;
+            --color-primary: #76bfe9;
+            --color-primary-dark: #13141f;
+
             --color-white: #fff;
             --color-gray1: #fefe;
+            --color-gray-4: #959595;
+
+            --color-dark-text: #444;
+
             --font-primary: sans-serif;
             --font-headings: 'Roboto Slab', serif;
-            --spacing-gutter-large: 4rem;
+
+            --spacing-gutter-lg: 4rem;
+            --spacing-gutter-sm: 2rem;
         }
 
         * {
@@ -41,6 +48,7 @@
             font-size: 1.6rem;
             font-family: var(--font-primary);
             background-color: var(--color-gray1);
+            color: var(--color-dark-text);
         }
 
         h1,
@@ -55,11 +63,11 @@
         .container {
             max-width: 144rem;
             margin: 0 auto;
-            padding: var(--spacing-gutter-large);
+            padding: var(--spacing-gutter-lg);
         }
 
         .main-header-container {
-            background-color: var(--primary-color-dark);
+            background-color: var(--color-primary-dark);
         }
 
         .main-logo {
@@ -87,7 +95,7 @@
         }
 
         .search-form:focus-within {
-            border-color: var(--primary-color);
+            border-color: var(--color-primary);
             transition: .2s ease-out;
         }
 
@@ -107,7 +115,7 @@
         }
 
         .search-form:focus-within .search-button {
-            color: var(--primary-color);
+            color: var(--color-primary);
             transition: .2s ease-out;
         }
 
@@ -127,7 +135,7 @@
         .main-content-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: var(--spacing-gutter-large);
+            gap: var(--spacing-gutter-lg);
         }
 
         .recipe {
@@ -147,6 +155,39 @@
         .recipe-list-item:hover {
             transform: scale(1.02);
             transition: .2s all;
+            box-shadow: -8px 8px 18px rgba(0, 0, 0, .25);
+        }
+
+        .recipe-title-container {
+            padding: var(--spacing-gutter-sm);
+            padding-bottom: calc(var(--spacing-gutter-sm) / 2);
+        }
+
+        .recipe-author {
+            list-style: none;
+            display: flex;
+            padding: 0 var(--spacing-gutter-sm);
+            color: var(--color-gray-4);
+            gap: 1rem;
+        }
+
+        .recipe-author i{
+            margin-right: .5rem;
+        }
+
+        .recipe-author a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: all .1s ease-in-out;
+        }
+
+        .recipe-author a:hover {
+            color: var(--color-primary-dark);
+            transition: all .1s ease-in-out;
+        }
+
+        .recipe-content {
+            padding: var(--spacing-gutter-sm)
         }
     </style>
 </head>
