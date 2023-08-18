@@ -6,4 +6,4 @@ def home(req):
 
 
 def recipe(req, id):
-    return render(req, 'recipes/pages/home.html')
+    return render(req, 'recipes/pages/recipeView.html')
