@@ -9,4 +9,4 @@ def home(req):
 
 def recipe(req, id):
     return render(req, 'recipes/pages/recipeView.html',
-                  {'recipe': make_recipe()})
+                  {'recipe': make_recipe(), 'is_detail_view': True})
