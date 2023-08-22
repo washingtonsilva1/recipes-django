@@ -158,6 +158,11 @@ h6 {
     padding-bottom: calc(var(--spacing-gutter-sm) / 2);
 }
 
+.recipe-title-container a {
+    text-decoration: none;
+    color: var(--color-dark-text);
+}
+
 .recipe-author-container {
     padding: 0 var(--spacing-gutter-md);
     color: var(--color-gray-4);
