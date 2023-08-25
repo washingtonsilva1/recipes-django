@@ -10,21 +10,23 @@
         </a>
     </div>
     <div class="recipe-author-container">
-        <span class="recipe-author-item">
-            <i class="fas fa-user"></i>
-            {% if recipe.user.first_name %}
-                <span>{{recipe.user.first_name}}</span>
-                {% if recipe.user.last_name %}
-                    <span>{{recipe.user.last_name}}</span>
+        {% if recipe.user is not None %}
+            <span class="recipe-author-item">
+                <i class="fas fa-user"></i>
+                {% if recipe.user.first_name %}
+                    <span>{{recipe.user.first_name}}</span>
+                    {% if recipe.user.last_name %}
+                        <span>{{recipe.user.last_name}}</span>
+                    {% endif %}
+                {% else %}
+                    <span>{{recipe.user}}</span>
                 {% endif %}
-            {% else %}
-                <span>{{recipe.user}}</span>
-            {% endif %}
-        </span>
+            </span>
+        {% endif %}
         <span class="recipe-author-item">
             <i class="fas fa-calendar-alt"></i> {{recipe.created_at|date:"d/m/Y à\s H:i:s"}}
         </span>
-        {% if recipe.category %}
+        {% if recipe.category is not None %}
         <span class="recipe-author-item">
             <a href="{% url 'recipes:category' recipe.category.id %}"><i class="fas fa-layer-group"></i> {{recipe.category.name|capfirst}}</a>
         </span>
