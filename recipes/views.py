@@ -1,10 +1,18 @@
 from django.shortcuts import render
 from utils.recipe.factory import make_recipe
+from .models import Recipe
 
 
 def home(req):
+    recipes = Recipe.objects.all().order_by('-id')
     return render(req, 'recipes/pages/home.html',
-                  {'recipes': [make_recipe() for _ in range(10)]})
+                  {'recipes': recipes})
+
+
+def category(req, id):
+    recipes = Recipe.objects.filter(category__id=id).order_by('-id')
+    return render(req, 'recipes/pages/home.html',
+                  {'recipes': recipes})
 
 
 def recipe(req, id):
