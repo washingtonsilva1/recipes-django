@@ -238,3 +238,19 @@ h6 {
     color: var(--color-white);
     padding: var(--spacing-gutter-md);
 }
+
+.preparation-steps h1,
+.preparation-steps h2,
+.preparation-steps h3,
+.preparation-steps h4,
+.preparation-steps h5,
+.preparation-steps ul,
+.preparation-steps ol,
+.preparation-steps pre,
+.preparation-steps h6 {
+    margin: 2rem 0;
+}
+
+.preparation-steps li {
+    margin: 0 5rem;
+}
