@@ -254,3 +254,21 @@ h6 {
 .preparation-steps li {
     margin: 0 5rem;
 }
+
+/* Generic */
+.d-block {
+    display: block;
+    height: 64rem;
+}
+
+.center {
+    text-align: center;
+}
+
+.m-x {
+    margin: 0 var(--spacing-gutter-md);
+}
+
+.m-y {
+    margin: var(--spacing-gutter-md) 0;
+}
