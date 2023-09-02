@@ -22,9 +22,11 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('There are no recipes', response.content.decode('utf-8'))
 
     def test_recipes_home_template_loads_recipes(self):
-        self.make_recipe(title='New Recipe')
+        needed_title = 'A New Recipe'
+        self.make_recipe(title=needed_title)
         response = self.client.get(reverse('recipes:home'))
-        self.assertIn('New Recipe', response.content.decode('utf-8'))
+        content = response.content.decode('utf-8')
+        self.assertIn(needed_title, content)
 
     def test_recipes_category_view_is_correct(self):
         view = resolve(reverse('recipes:category', args=[1]))
@@ -34,6 +36,13 @@ class RecipeViewsTest(RecipeTestBase):
         response = self.client.get(reverse('recipes:category', args=[1]))
         self.assertEqual(response.status_code, 404)
 
+    def test_recipes_category_template_loads_recipes(self):
+        needed_title = 'Recipe title'
+        self.make_recipe(title=needed_title)
+        response = self.client.get(reverse('recipes:category', args=[1]))
+        content = response.content.decode('utf-8')
+        self.assertIn(needed_title, content)
+
     def test_recipes_recipe_view_is_correct(self):
         view = resolve(reverse('recipes:recipe', args=[1]))
         self.assertIs(view.func, views.recipe)
@@ -41,3 +50,8 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipes_recipe_returns_404_if_not_exists(self):
         response = self.client.get(reverse('recipes:recipe', args=[1]))
         self.assertEqual(response.status_code, 404)
+
+    def test_recipes_recipe_template_loads_recipes(self):
+        self.make_recipe(title='Minha receita')
+        response = self.client.get(reverse('recipes:recipe', args=[1]))
+        self.assertIn('Minha receita', response.content.decode('utf-8'))

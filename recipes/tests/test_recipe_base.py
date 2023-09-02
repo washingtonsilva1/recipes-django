@@ -18,7 +18,13 @@ class RecipeTestBase(TestCase):
                     servings_unit='Pessoa(s)',
                     preparation_steps='how to do the recipe, step by step...',
                     preparation_steps_is_html=False, is_published=True,
-                    category={}, user_data={}):
+                    category=None, user_data=None):
+        if category is None:
+            category = {}
+
+        if user_data is None:
+            user_data = {}
+
         return Recipe.objects.create(
             title=title,
             description=description,
