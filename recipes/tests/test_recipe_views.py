@@ -28,6 +28,12 @@ class RecipeViewsTest(RecipeTestBase):
         content = response.content.decode('utf-8')
         self.assertIn(needed_title, content)
 
+    def test_recipes_home_template_doesnt_load_unpublished_recipes(self):
+        self.make_recipe(is_published=False)
+        response = self.client.get(reverse('recipes:home'))
+        content = response.content.decode('utf-8')
+        self.assertIn('There are no recipes', content)
+
     def test_recipes_category_view_is_correct(self):
         view = resolve(reverse('recipes:category', args=[1]))
         self.assertIs(view.func, views.category)
@@ -52,6 +58,6 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertEqual(response.status_code, 404)
 
     def test_recipes_recipe_template_loads_recipes(self):
-        self.make_recipe(title='Minha receita')
+        self.make_recipe(title='A new recipe arrives')
         response = self.client.get(reverse('recipes:recipe', args=[1]))
-        self.assertIn('Minha receita', response.content.decode('utf-8'))
+        self.assertIn('A new recipe arrives', response.content.decode('utf-8'))
