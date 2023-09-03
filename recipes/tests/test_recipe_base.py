@@ -11,12 +11,12 @@ class RecipeTestBase(TestCase):
                   password='secretphrase'):
         return User.objects.create_user(username, email, password)
 
-    def make_recipe(self, title='recipe title',
-                    description='recipe description',
+    def make_recipe(self, title='Recipe\'s Title',
+                    description='Recipe\'s Description',
                     slug='recipe-slug', preparation_time=1,
                     preparation_time_unit='Minutos', servings=1,
-                    servings_unit='Pessoa(s)',
-                    preparation_steps='how to do the recipe, step by step...',
+                    servings_unit='Pessoa',
+                    preparation_steps='How to do the recipe, step by step...',
                     preparation_steps_is_html=False, is_published=True,
                     category=None, user_data=None):
         if category is None:
