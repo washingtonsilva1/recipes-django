@@ -1,13 +1,28 @@
 from django.core.exceptions import ValidationError
 from parameterized import parameterized
 
-from .test_recipe_base import RecipeTestBase
+from .test_recipe_base import RecipeTestBase, Recipe
 
 
 class TestRecipeModel(RecipeTestBase):
     def setUp(self):
         self.recipe = self.make_recipe()
         super().setUp()
+
+    def make_recipe_no_defaults(self):
+        recipe = Recipe(
+            title='Recipe\'s Title',
+            description='Recipe\'s Description',
+            slug='recipe-slug', preparation_time=1,
+            preparation_time_unit='Minutos', servings=1,
+            servings_unit='Pessoa',
+            preparation_steps='How to do the recipe, step by step...',
+            category=self.make_category(category_name='second_category'),
+            user=self.make_user(username='second_user')
+        )
+        recipe.full_clean()
+        recipe.save()
+        return recipe
 
     @parameterized.expand([
         ('title', 65),
@@ -20,3 +35,13 @@ class TestRecipeModel(RecipeTestBase):
         setattr(self.recipe, field, 'A' * (max_length + 1))
         with self.assertRaises(ValidationError):
             self.recipe.full_clean()
+
+    def test_recipe_is_published_default_is_false(self):
+        recipe = self.make_recipe_no_defaults()
+        self.assertFalse(recipe.is_published,
+                         msg='Recipe is_published is not False!')
+
+    def test_recipe_preparation_steps_is_html_default_is_false(self):
+        recipe = self.make_recipe_no_defaults()
+        self.assertFalse(recipe.preparation_steps_is_html,
+                         msg='Recipe preparation_steps_is_html is not False')
