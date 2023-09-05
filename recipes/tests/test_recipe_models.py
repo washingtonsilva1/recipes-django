@@ -45,3 +45,14 @@ class TestRecipeModel(RecipeTestBase):
         recipe = self.make_recipe_no_defaults()
         self.assertFalse(recipe.preparation_steps_is_html,
                          msg='Recipe preparation_steps_is_html is not False')
+
+    def test_recipe_string_representation(self):
+        title_needed = 'Recipe Text Representation'
+        self.recipe.title = title_needed
+        self.recipe.full_clean()
+        self.recipe.save()
+        self.assertEqual(
+            title_needed,
+            str(self.recipe),
+            msg=f'Recipe title must be {title_needed} ' +
+            f'but {self.recipe} was received')
