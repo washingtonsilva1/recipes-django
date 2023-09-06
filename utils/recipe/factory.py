@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, choice
 from faker import Faker
 
 
@@ -31,3 +31,10 @@ def make_recipe():
             'url': 'https://loremflickr.com/%s/%s/food,cook' % rand_ratio(),
         }
     }
+
+
+def random_name():
+    a = ['Receita', 'Escondidinho', 'Churrasco', 'Bolo', 'Panqueca']
+    b = ['tradicional', 'especial']
+    c = ['da Mamãe', 'do Papai', 'da Vovó', 'do Vovô', 'da Família']
+    return f'{choice(a)} {choice(b)} {choice(c)}'
