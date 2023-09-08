@@ -74,3 +74,7 @@ class RecipeViewsTest(RecipeTestBase):
         response = self.client.get(
             reverse('recipes:recipe', kwargs={'id': recipe.id}))
         self.assertEqual(response.status_code, 404)
+
+    def test_recipes_recipe_search_view_is_correct(self):
+        view = resolve(reverse('recipes:search'))
+        self.assertIs(view.func, views.search)

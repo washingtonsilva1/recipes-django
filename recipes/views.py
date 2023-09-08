@@ -22,3 +22,7 @@ def recipe(req, id):
     return render(req, 'recipes/pages/recipeView.html',
                   {'recipe': recipe, 'is_detail_view': True,
                    'title': f'{recipe.title} | '})
+
+
+def search(req):
+    ...
