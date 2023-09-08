@@ -1,7 +1,7 @@
 <div class="search-conteiner">
     <div class="container">
-        <form class="search-form" action="">
-            <input type="search" class="search-input" name="q">
+        <form class="search-form" action="{% url 'recipes:search' %}">
+            <input type="search" class="search-input" name="q" required>
             <button class="search-button"><i class="fas fa-search"></i></button>
         </form>
     </div>
