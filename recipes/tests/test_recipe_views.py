@@ -88,7 +88,11 @@ class RecipeViewsTest(RecipeTestBase):
         response = self.client.get(reverse('recipes:search'))
         self.assertEqual(response.status_code, 404)
 
-    def test_recipes_recipe_search_holds_search_term(self):
-        search = 'recipe'
+    def test_recipes_recipe_search_term_escaped(self):
+        search = '<script>alert("hello, world!")</script>'
         response = self.client.get(reverse('recipes:search') + f'?q={search}')
-        self.assertEqual(response.context['search_term'], search)
+        content = response.content.decode('utf-8')
+        self.assertIn(
+            '&lt;script&gt;alert(&quot;hello, world!&quot;)&lt;/script&gt;',
+            content
+        )
