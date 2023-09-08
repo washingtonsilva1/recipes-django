@@ -13,7 +13,7 @@ class TestRecipeModel(RecipeTestBase):
         recipe = Recipe(
             title='Recipe\'s Title',
             description='Recipe\'s Description',
-            slug='recipe-slug', preparation_time=1,
+            slug='recipe-slug-2', preparation_time=1,
             preparation_time_unit='Minutos', servings=1,
             servings_unit='Pessoa',
             preparation_steps='How to do the recipe, step by step...',
