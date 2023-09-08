@@ -25,4 +25,4 @@ def recipe(req, id):
 
 
 def search(req):
-    ...
+    return render(req, 'recipes/pages/search.html')

@@ -78,3 +78,8 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipes_recipe_search_view_is_correct(self):
         view = resolve(reverse('recipes:search'))
         self.assertIs(view.func, views.search)
+
+    def test_recipes_recipe_search_loads_correct_template(self):
+        response = self.client.get(reverse('recipes:search'))
+        self.assertTemplateUsed(
+            response, 'recipes/pages/search.html')
