@@ -87,3 +87,8 @@ class RecipeViewsTest(RecipeTestBase):
     def test_recipes_recipe_search_raises_404_if_no_search_term(self):
         response = self.client.get(reverse('recipes:search'))
         self.assertEqual(response.status_code, 404)
+
+    def test_recipes_recipe_search_holds_search_term(self):
+        search = 'recipe'
+        response = self.client.get(reverse('recipes:search') + f'?q={search}')
+        self.assertEqual(response.context['search_term'], search)

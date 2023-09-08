@@ -26,7 +26,9 @@ def recipe(req, id):
 
 
 def search(req):
-    search_term = req.GET.get('q')
+    search_term = req.GET.get('q', '').strip()
     if not search_term:
         raise Http404()
-    return render(req, 'recipes/pages/search.html')
+    return render(req, 'recipes/pages/search.html', context={
+        'search_term': search_term,
+    })
