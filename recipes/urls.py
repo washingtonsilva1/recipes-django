@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('recipes/search/', views.search, name='search'),
     path('recipes/category/<int:id>/', views.category, name='category'),
-    path('recipes/<int:id>/', views.recipe, name='recipe'),
+    path('recipes/<int:id>/', views.recipe, name='detail'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
