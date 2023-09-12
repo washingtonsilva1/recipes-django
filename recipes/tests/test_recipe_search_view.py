@@ -32,3 +32,31 @@ class RecipeSearchViewTest(RecipeTestBase):
         response = self.client.get(
             reverse('recipes:search') + '?q=Recipe%20unpublished')
         self.assertEqual(len(response.context['recipes']), 0)
+
+    def test_recipe_search_view_gets_recipe_by_title(self):
+        title = 'Title to search'
+        self.make_recipe(title=title)
+        response = self.client.get(reverse('recipes:search') + f'?q={title}')
+        content = response.content.decode('utf-8')
+        self.assertIn(title, content)
+
+    def test_recipe_search_view_gets_recipe_by_description(self):
+        description = 'Description to search'
+        self.make_recipe(description=description)
+        response = self.client.get(
+            reverse('recipes:search') + f'?q={description}')
+        content = response.content.decode('utf-8')
+        self.assertIn(description, content)
+
+    def test_recipe_search_view_gets_recipe_by_title_and_description(self):
+        title = 'Title to search'
+        description = 'Description to search'
+        self.make_recipe(title=title, description=description)
+        response_one = self.client.get(
+            reverse('recipes:search') + f'?q={title}')
+        content_one = response_one.content.decode('utf-8')
+        response_two = self.client.get(
+            reverse('recipes:search') + f'?q={description}')
+        content_two = response_two.content.decode('utf-8')
+        self.assertIn(title, content_one)
+        self.assertIn(description, content_two)
