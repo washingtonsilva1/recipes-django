@@ -31,6 +31,7 @@ def search(req):
     if not search_term:
         raise Http404()
     recipes = Recipe.objects.filter(
+        Q(is_published=True),
         Q(title__icontains=search_term) |
         Q(description__icontains=search_term),
     ).order_by('-id')
