@@ -7,7 +7,7 @@ from .test_recipe_base import RecipeTestBase
 class RecipeDetailViewTest(RecipeTestBase):
     def test_recipe_detail_view_is_correct(self):
         view = resolve(reverse('recipes:detail', args=[1]))
-        self.assertIs(view.func, views.recipe)
+        self.assertIs(view.func, views.detail)
 
     def test_recipe_detail_view_returns_404_if_not_exists(self):
         response = self.client.get(reverse('recipes:detail', args=[1]))
