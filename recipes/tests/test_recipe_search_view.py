@@ -26,3 +26,9 @@ class RecipeSearchViewTest(RecipeTestBase):
             '&lt;script&gt;alert(&quot;hello, world!&quot;)&lt;/script&gt;',
             content
         )
+
+    def test_recipe_search_view_doesnt_show_unpublished_recipes(self):
+        self.make_recipe(title='Recipe unpublished', is_published=False)
+        response = self.client.get(
+            reverse('recipes:search') + '?q=Recipe%20unpublished')
+        self.assertEqual(len(response.context['recipes']), 0)
