@@ -1,14 +1,24 @@
 from math import ceil
 
 
-def make_pagination_range(range, pages, current):
+def make_pagination_range(page_range, pages, current):
     middle_page = ceil(pages/2)
     start_page = current - middle_page
     last_page = current + middle_page
-    total = ceil(len(range)/pages)
-
-    if current > middle_page:
-        if last_page > total:
-            return range[start_page:total + 1]
-        return range[start_page:last_page]
-    return range[:4]
+    total = len(page_range)
+    if current >= total-2:
+        last_page = total
+        start_page = total-4
+    if current < middle_page:
+        start_page = 0
+        last_page = 4
+    return {
+        'pagination': page_range[start_page:last_page],
+        'page_range': page_range,
+        'start_page': start_page,
+        'qty_pages': pages,
+        'last_page': last_page,
+        'current': current,
+        'first_page_out_of_page_range': current > middle_page,
+        'last_page_out_of_page_range': current < total,
+    }
