@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import Http404
 from .models import Recipe
@@ -6,8 +7,12 @@ from django.db.models import Q
 
 def home(req):
     recipes = Recipe.objects.filter(is_published=True).order_by('-id')
+    paginator = Paginator(recipes, 9)
+
+    page_number = req.GET.get('page', '1')
+    page_obj = paginator.get_page(page_number)
     return render(req, 'recipes/pages/home.html',
-                  {'recipes': recipes})
+                  {'recipes': page_obj})
 
 
 def category(req, id):
