@@ -1,0 +1,19 @@
+{% if recipes.has_other_pages %}
+    <div class="container">
+        <div class="pag-container">
+            <a href="{% if recipes.has_previous %}?page={{recipes.previous_page_number}}{% endif %}" class="pag-item {% if not recipes.has_previous %}pag-item-not-active{% endif %}">Previous</a>
+            {% if pagination_range.first_page_out_of_page_range %}
+                <a href="?page=1" class="pag-item">1</a>
+                <div class="pag-item">...</div>
+            {% endif %}
+            {% for page in pagination_range.pagination %}
+                <a href="?page={{page}}" class="pag-item {% if pagination_range.current == page %}pag-item-not-active{% endif %}">{{page}}</a>
+            {% endfor %}
+            {% if pagination_range.last_page_out_of_page_range %}
+                <div class="pag-item">...</div>
+                <a href="?page={{pagination_range.last_page}}" class="pag-item">{{pagination_range.last_page}}</a>                
+            {% endif %}
+            <a href="{% if recipes.has_next %}?page={{recipes.next_page_number}}{% endif %}" class="pag-item {% if not recipes.has_next %}pag-item-not-active{% endif %}">Next</a>
+        </div>
+    </div>
+{% endif %}

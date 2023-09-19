@@ -2,6 +2,8 @@
 
 :root {
     --color-primary: #76bfe9;
+    --color-secondary: #1386c9;    
+    --color-secondary-hover: #3b9fd8;    
     --color-primary-dark: #13141f;
 
     --color-white: #fff;
@@ -253,6 +255,34 @@ h6 {
 
 .preparation-steps li {
     margin: 0 5rem;
+}
+
+.pag-container {
+    display: flex;
+}
+
+.pag-item {
+    padding: 1rem;
+    background-color: var(--color-secondary);
+    margin-right: 5px;
+    text-decoration: none;
+    font-weight: 300;
+    color: var(--color-white);
+    border-radius: 5px;
+}
+
+a.pag-item {
+    transition: ease-in-out .1s;
+}
+
+a.pag-item:hover {
+    background-color: var(--color-secondary-hover);
+    transition: ease-in-out .1s;
+}
+
+.pag-item-not-active {    
+    pointer-events: none;
+    background-color: var(--color-primary);
 }
 
 /* Generic */

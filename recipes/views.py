@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import Http404
+from utils.pagination import make_pagination_range
 from .models import Recipe
 from django.db.models import Q
 
@@ -11,8 +12,10 @@ def home(req):
 
     page_number = req.GET.get('page', '1')
     page_obj = paginator.get_page(page_number)
+    pagination = make_pagination_range(
+        paginator.page_range, 4, page_obj.number)
     return render(req, 'recipes/pages/home.html',
-                  {'recipes': page_obj})
+                  {'recipes': page_obj, 'pagination_range': pagination})
 
 
 def category(req, id):
