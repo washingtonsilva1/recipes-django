@@ -1,19 +1,39 @@
 {% if recipes.has_other_pages %}
     <div class="container">
         <div class="pag-container">
-            <a href="{% if recipes.has_previous %}?page={{recipes.previous_page_number}}{% endif %}" class="pag-item {% if not recipes.has_previous %}pag-item-not-active{% endif %}">Previous</a>
+            {% if recipes.has_previous %}
+                <a href="?page={{recipes.previous_page_number}}" class="pag-item">
+                        <i class="fa-solid fa-chevron-left"></i>                    
+                </a>
+            {% else %}
+                <span class="pag-item" disabled>
+                    <i class="fa-solid fa-chevron-left"></i>  
+                </span>
+            {% endif %}   
             {% if pagination_range.first_page_out_of_page_range %}
                 <a href="?page=1" class="pag-item">1</a>
                 <div class="pag-item">...</div>
             {% endif %}
             {% for page in pagination_range.pagination %}
-                <a href="?page={{page}}" class="pag-item {% if pagination_range.current == page %}pag-item-not-active{% endif %}">{{page}}</a>
+                {% if pagination_range.current == page %}
+                    <span class="pag-item pag-item-active">{{page}}</span>
+                {% else %}
+                    <a href="?page={{page}}" class="pag-item">{{page}}</a>
+                {% endif %}                
             {% endfor %}
             {% if pagination_range.last_page_out_of_page_range %}
-                <div class="pag-item">...</div>
+                <span class="pag-item">...</span>
                 <a href="?page={{pagination_range.last_page}}" class="pag-item">{{pagination_range.last_page}}</a>                
             {% endif %}
-            <a href="{% if recipes.has_next %}?page={{recipes.next_page_number}}{% endif %}" class="pag-item {% if not recipes.has_next %}pag-item-not-active{% endif %}">Next</a>
+            {% if recipes.has_next %}
+                <a href="?page={{recipes.next_page_number}}" class="pag-item">
+                        <i class="fa-solid fa-chevron-right"></i>                    
+                </a>
+            {% else %}
+                <span class="pag-item" disabled>
+                    <i class="fa-solid fa-chevron-right"></i>  
+                </span>
+            {% endif %}            
         </div>
     </div>
 {% endif %}

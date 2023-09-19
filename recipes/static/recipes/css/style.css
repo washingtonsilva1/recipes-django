@@ -259,15 +259,15 @@ h6 {
 
 .pag-container {
     display: flex;
+    flex-flow: wrap;
 }
 
 .pag-item {
-    padding: 1rem;
-    background-color: var(--color-secondary);
+    padding: 1rem 1.5rem;
     margin-right: 5px;
     text-decoration: none;
-    font-weight: 300;
-    color: var(--color-white);
+    font-weight: bold;
+    color: var(--color-primary-dark);
     border-radius: 5px;
 }
 
@@ -276,12 +276,18 @@ a.pag-item {
 }
 
 a.pag-item:hover {
+    color: var(--color-white);
     background-color: var(--color-secondary-hover);
     transition: ease-in-out .1s;
 }
 
-.pag-item-not-active {    
-    pointer-events: none;
+span.pag-item[disabled] {
+    color: #a1a1a1;    
+    cursor: not-allowed;
+}
+
+.pag-item-active {    
+    color: var(--color-white);
     background-color: var(--color-primary);
 }
 
