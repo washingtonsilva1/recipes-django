@@ -1,4 +1,5 @@
 from math import ceil
+from django.core.paginator import Paginator
 
 
 def make_pagination_range(page_range, pages, current):
@@ -21,4 +22,18 @@ def make_pagination_range(page_range, pages, current):
         'current': current,
         'first_page_out_of_page_range': current > middle_page,
         'last_page_out_of_page_range': current < total - middle_page,
+    }
+
+
+def make_pagination(request, obj_list, obj_per_page, pages_to_display):
+    paginator = Paginator(obj_list, obj_per_page)
+    current_page = request.GET.get('page', 1)
+    page = paginator.get_page(current_page)
+    pagination_range = make_pagination_range(
+        page_range=paginator.page_range,
+        pages=pages_to_display,
+        current=page.number)
+    return {
+        'page_range': pagination_range,
+        'page': page
     }
