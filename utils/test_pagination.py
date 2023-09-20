@@ -1,8 +1,9 @@
-from unittest import TestCase
+from recipes.tests.test_recipe_base import RecipeTestBase
 from pagination import make_pagination_range
+from django.urls import reverse
 
 
-class PaginationTest(TestCase):
+class PaginationTest(RecipeTestBase):
     def test_pagination_range_returns_a_pagination_range(self):
         pagination = make_pagination_range(
             page_range=list(range(1, 21)),
@@ -41,3 +42,27 @@ class PaginationTest(TestCase):
             pages=4,
             current=20)
         self.assertEqual([17, 18, 19, 20], pagination['pagination'])
+
+    def test_pagination_displaying_nine_recipes_per_page(self):
+        for i in range(21):
+            self.make_recipe(
+                slug=f'recipe-slug-{i}',
+                user_data={'username': f'{i}'}
+            )
+        response = self.client.get(reverse('recipes:home') + '?page=1')
+        context = response.context['recipes'].object_list
+        self.assertEqual(len(context), 9)
+        response = self.client.get(reverse('recipes:home') + '?page=2')
+        context = response.context['recipes'].object_list
+        self.assertEqual(len(context), 9)
+
+    def test_pagination_displaying_less_than_nine_recipes(self):
+        # that occurs when there are less than nine recipes to display
+        for i in range(3):
+            self.make_recipe(
+                slug=f'recipe-slug-{i}',
+                user_data={'username': f'{i}'}
+            )
+        response = self.client.get(reverse('recipes:home') + '?page=1')
+        context = response.context['recipes'].object_list
+        self.assertEqual(len(context), 3)
