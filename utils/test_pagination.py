@@ -1,6 +1,7 @@
-from recipes.tests.test_recipe_base import RecipeTestBase
 from pagination import make_pagination_range
 from django.urls import reverse
+from unittest.mock import patch
+from recipes.tests.test_recipe_base import RecipeTestBase
 
 
 class PaginationTest(RecipeTestBase):
@@ -43,26 +44,34 @@ class PaginationTest(RecipeTestBase):
             current=20)
         self.assertEqual([17, 18, 19, 20], pagination['pagination'])
 
+    @patch('recipes.views.PER_PAGE', new=9)
     def test_pagination_displaying_nine_recipes_per_page(self):
-        for i in range(21):
-            self.make_recipe(
-                slug=f'recipe-slug-{i}',
-                user_data={'username': f'{i}'}
-            )
-        response = self.client.get(reverse('recipes:home') + '?page=1')
-        context = response.context['recipes'].object_list
-        self.assertEqual(len(context), 9)
-        response = self.client.get(reverse('recipes:home') + '?page=2')
-        context = response.context['recipes'].object_list
-        self.assertEqual(len(context), 9)
+        for i in range(10):
+            kwargs = {'slug': f'recipe-slug-{i}',
+                      'user_data': {'username': f'{i}'}}
+            self.make_recipe(**kwargs)
+        response = self.client.get(reverse('recipes:home'))
+        paginator = response.context['recipes'].paginator
+        self.assertEqual(len(paginator.get_page(1)), 9)
 
+    @patch('recipes.views.PER_PAGE', new=9)
     def test_pagination_displaying_less_than_nine_recipes(self):
         # that occurs when there are less than nine recipes to display
         for i in range(3):
-            self.make_recipe(
-                slug=f'recipe-slug-{i}',
-                user_data={'username': f'{i}'}
-            )
-        response = self.client.get(reverse('recipes:home') + '?page=1')
-        context = response.context['recipes'].object_list
-        self.assertEqual(len(context), 3)
+            kwargs = {'slug': f'recipe-slug-{i}',
+                      'user_data': {'username': f'{i}'}}
+            self.make_recipe(**kwargs)
+        response = self.client.get(reverse('recipes:home'))
+        paginator = response.context['recipes'].paginator
+        self.assertEqual(len(paginator.get_page(1)), 3)
+
+    @patch('recipes.views.PER_PAGE', new=9)
+    def test_pagination_displaying_correct_amount_of_pages(self):
+        for i in range(18):
+            kwargs = {'slug': f'recipe-slug-{i}',
+                      'user_data': {'username': f'{i}'}}
+            self.make_recipe(**kwargs)
+        response = self.client.get(reverse('recipes:home'))
+        recipes = response.context['recipes']
+        paginator = recipes.paginator
+        self.assertEqual(paginator.num_pages, 2)
