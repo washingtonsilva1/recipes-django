@@ -46,7 +46,7 @@ h6 {
     font-family: var(--font-headings);
 }
 
-.container {
+.container, .pagination {
     max-width: 144rem;
     margin: 0 auto;
     padding: var(--spacing-gutter-lg);
@@ -255,6 +255,11 @@ h6 {
 
 .preparation-steps li {
     margin: 0 5rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
 }
 
 .pag-container {
