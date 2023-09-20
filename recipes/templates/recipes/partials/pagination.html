@@ -1,8 +1,8 @@
 {% if recipes.has_other_pages %}
-    <div class="container">
+    <div class="pagination">
         <div class="pag-container">
             {% if recipes.has_previous %}
-                <a href="?page={{recipes.previous_page_number}}" class="pag-item">
+                <a href="?page={{recipes.previous_page_number}}{{additional_query}}" class="pag-item">
                         <i class="fa-solid fa-chevron-left"></i>                    
                 </a>
             {% else %}
@@ -11,22 +11,22 @@
                 </span>
             {% endif %}   
             {% if pagination_range.first_page_out_of_page_range %}
-                <a href="?page=1" class="pag-item">1</a>
+                <a href="?page=1{{additional_query}}" class="pag-item">1</a>
                 <div class="pag-item">...</div>
             {% endif %}
             {% for page in pagination_range.pagination %}
                 {% if pagination_range.current == page %}
                     <span class="pag-item pag-item-active">{{page}}</span>
                 {% else %}
-                    <a href="?page={{page}}" class="pag-item">{{page}}</a>
+                    <a href="?page={{page}}{{additional_query}}" class="pag-item">{{page}}</a>
                 {% endif %}                
             {% endfor %}
             {% if pagination_range.last_page_out_of_page_range %}
                 <span class="pag-item">...</span>
-                <a href="?page={{pagination_range.last_page}}" class="pag-item">{{pagination_range.last_page}}</a>                
+                <a href="?page={{pagination_range.last_page}}{{additional_query}}" class="pag-item">{{pagination_range.last_page}}</a>                
             {% endif %}
             {% if recipes.has_next %}
-                <a href="?page={{recipes.next_page_number}}" class="pag-item">
+                <a href="?page={{recipes.next_page_number}}{{additional_query}}" class="pag-item">
                         <i class="fa-solid fa-chevron-right"></i>                    
                 </a>
             {% else %}
