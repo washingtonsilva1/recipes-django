@@ -6,5 +6,6 @@
         <li>pytest-django</li>
         <li>parameterized</li>
         <li>coverage</li>
+        <li>python-dotenv</li>
     </ul>
 </div>
