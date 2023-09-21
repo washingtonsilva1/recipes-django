@@ -7,5 +7,6 @@
         <li>parameterized</li>
         <li>coverage</li>
         <li>python-dotenv</li>
+        <li>sweetify</li>
     </ul>
 </div>
