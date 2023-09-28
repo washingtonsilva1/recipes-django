@@ -52,15 +52,15 @@ class RegisterForm(forms.ModelForm):
 
         error_messages = {
             'username': {
-                'required': 'This field can\'t be empty.'
+                'required': 'This field can\'t be empty.',
             },
             'password': {
-                'required': 'This field can\'t be empty.'
+                'required': 'This field can\'t be empty.',
             }
         }
 
         help_texts = {
-            'email': 'Enter a valid e-mail!'
+            'email': 'Enter a valid e-mail!',
         }
 
         widgets = {
@@ -82,3 +82,15 @@ class RegisterForm(forms.ModelForm):
                 params={'value': 'Attention'})
 
         return data
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+        if password != password2:
+            raise ValidationError(
+                {'password2': ValidationError(
+                    'The passwords must be equal.',
+                    code='invalid')
+                 }
+            )
