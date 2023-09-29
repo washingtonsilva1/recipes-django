@@ -14,11 +14,10 @@ def set_placeholder(field, placeholder):
 
 def strong_password(password):
     regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
-    if not regex.match('password'):
+    if not regex.match(password):
         raise ValidationError(
-            'Password must have at least one uppercase and '
-            'lowercase letter and one number. The length should be '
-            'at least 8 characters.', code='invalid')
+            'You password doesn\'t match the requirements.', code='invalid')
+    return True
 
 
 class RegisterForm(forms.ModelForm):
@@ -31,8 +30,21 @@ class RegisterForm(forms.ModelForm):
             field=self.fields['first_name'], placeholder='Ex.: Jonathan')
         set_placeholder(
             field=self.fields['last_name'], placeholder='Ex.: Joestar')
-        self.fields['password'].validators.append(strong_password)
-
+    password = forms.CharField(
+        label='Password',
+        error_messages={
+            'required': 'This field can\'t be empty.'
+        },
+        help_text='Password must have at least one uppercase and '
+        'lowercase letter and one number. The length should be '
+        'at least 8 characters.',
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Re-type your password'
+            }
+        ),
+        validators=[strong_password]
+    )
     password2 = forms.CharField(
         label='Confirm password',
         error_messages={
@@ -57,29 +69,25 @@ class RegisterForm(forms.ModelForm):
             'first_name': 'First Name',
             'last_name': 'Last Name',
             'username': 'Username',
-            'password': 'Password',
             'email': 'E-mail',
         }
 
         error_messages = {
             'username': {
                 'required': 'This field can\'t be empty.',
-            },
-            'password': {
-                'required': 'This field can\'t be empty.',
             }
         }
 
         help_texts = {
             'email': 'Enter a valid e-mail!',
+            'password': 'Password must have at least one uppercase and '
+            'lowercase letter and one number. The length should be '
+            'at least 8 characters.',
         }
 
         widgets = {
             'username': forms.TextInput(attrs={
                 'placeholder': 'Type your username'
-            }),
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'Type your password'
             }),
         }
 
@@ -101,7 +109,7 @@ class RegisterForm(forms.ModelForm):
         if password != password2:
             raise ValidationError(
                 {'password2': ValidationError(
-                    'The passwords must be equal.',
+                    'Passwords doesn\'t match.',
                     code='invalid')
                  }
             )
