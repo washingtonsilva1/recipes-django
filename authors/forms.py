@@ -25,11 +25,14 @@ class RegisterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         set_placeholder(
-            field=self.fields['username'], placeholder='Ex.: jojobiza21k')
+            field=self.fields['username'], placeholder='Ex.: joedoe22')
         set_placeholder(
-            field=self.fields['first_name'], placeholder='Ex.: Jonathan')
+            field=self.fields['first_name'], placeholder='Ex.: Joe')
         set_placeholder(
-            field=self.fields['last_name'], placeholder='Ex.: Joestar')
+            field=self.fields['last_name'], placeholder='Ex.: Doe')
+        set_placeholder(
+            field=self.fields['email'], placeholder='Type your mail')
+
     password = forms.CharField(
         label='Password',
         error_messages={
@@ -40,7 +43,7 @@ class RegisterForm(forms.ModelForm):
         'at least 8 characters.',
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Re-type your password'
+                'placeholder': 'Type your password'
             }
         ),
         validators=[strong_password]
@@ -83,12 +86,6 @@ class RegisterForm(forms.ModelForm):
             'password': 'Password must have at least one uppercase and '
             'lowercase letter and one number. The length should be '
             'at least 8 characters.',
-        }
-
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'placeholder': 'Type your username'
-            }),
         }
 
     def clean_first_name(self):
