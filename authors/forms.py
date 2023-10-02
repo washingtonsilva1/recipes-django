@@ -83,9 +83,6 @@ class RegisterForm(forms.ModelForm):
 
         help_texts = {
             'email': 'Enter a valid e-mail!',
-            'password': 'Password must have at least one uppercase and '
-            'lowercase letter and one number. The length should be '
-            'at least 8 characters.',
         }
 
     def clean_first_name(self):
