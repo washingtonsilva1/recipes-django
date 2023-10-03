@@ -69,8 +69,8 @@ class RegisterForm(forms.ModelForm):
         ]
 
         labels = {
-            'first_name': 'First Name',
-            'last_name': 'Last Name',
+            'first_name': 'First name',
+            'last_name': 'Last name',
             'username': 'Username',
             'email': 'E-mail',
         }
@@ -84,17 +84,6 @@ class RegisterForm(forms.ModelForm):
         help_texts = {
             'email': 'Enter a valid e-mail!',
         }
-
-    def clean_first_name(self):
-        data = self.cleaned_data.get('first_name')
-
-        if 'Attention' in data:
-            raise ValidationError(
-                'You can\'t type "%(value)s" here!',
-                code='invalid',
-                params={'value': 'Attention'})
-
-        return data
 
     def clean(self):
         cleaned_data = super().clean()
