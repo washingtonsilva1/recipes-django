@@ -12,7 +12,7 @@ class RegisterFormUnitTest(TestCase):
         ('last_name', 'Ex.: Doe'),
         ('password', 'Type your password'),
         ('password2', 'Confirm your password'),
-        ('email', 'Type your mail'),
+        ('email', 'Ex.: joedoe@mail.com'),
     ])
     def test_fields_placeholder(self, field, placeholder):
         form = RegisterForm()
@@ -23,7 +23,7 @@ class RegisterFormUnitTest(TestCase):
         ('password', 'Password must have at least one uppercase and '
          'lowercase letter and one number. The length should be '
          'at least 8 characters.'),
-        ('email', 'Enter a valid e-mail!'),
+        ('email', 'Please, enter a valid email.'),
     ])
     def test_fields_help_text(self, field, help_text):
         form = RegisterForm()
@@ -34,7 +34,7 @@ class RegisterFormUnitTest(TestCase):
         ('username', 'Username'),
         ('password', 'Password'),
         ('password2', 'Confirm password'),
-        ('email', 'E-mail'),
+        ('email', 'Email'),
         ('first_name', 'First name'),
         ('last_name', 'Last name'),
     ])
@@ -57,13 +57,15 @@ class RegisterFormIntegrationTest(DjangoTestCase):
         return super().setUp()
 
     @parameterized.expand([
-        ('username', 'This field can&#x27;t be empty.'),
-        ('password', 'This field can&#x27;t be empty.'),
-        ('password2', 'This field can&#x27;t be empty.'),
+        ('username', 'Type a valid username.'),
+        ('password', 'Type a valid password.'),
+        ('password2', 'Type your password again.'),
+        ('first_name', 'Type your first name.'),
+        ('last_name', 'Type your last name.'),
+        ('email', 'Type your email.'),
     ])
     def test_fields_can_not_be_empty(self, field, message):
         self.form_data[field] = ' '
         response = self.client.post(reverse('authors:create'),
                                     data=self.form_data, follow=True)
-        content = response.content.decode('utf-8')
-        self.assertIn(message, content)
+        self.assertIn(message, response.context['form'].errors[field])
