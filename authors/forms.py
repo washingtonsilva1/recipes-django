@@ -26,17 +26,45 @@ class RegisterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         set_placeholder(
             field=self.fields['username'], placeholder='Ex.: joedoe22')
-        set_placeholder(
-            field=self.fields['first_name'], placeholder='Ex.: Joe')
-        set_placeholder(
-            field=self.fields['last_name'], placeholder='Ex.: Doe')
-        set_placeholder(
-            field=self.fields['email'], placeholder='Type your mail')
 
+    first_name = forms.CharField(
+        label='First name',
+        error_messages={
+            'required': 'Type your first name.',
+        },
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ex.: Joe',
+            }
+        ),
+    )
+    last_name = forms.CharField(
+        label='Last name',
+        error_messages={
+            'required': 'Type your last name.',
+        },
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ex.: Doe'
+            }
+        ),
+    )
+    email = forms.EmailField(
+        label='Email',
+        error_messages={
+            'required': 'Type your email.',
+        },
+        help_text='Please, enter a valid email.',
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'Ex.: joedoe@mail.com',
+            }
+        )
+    )
     password = forms.CharField(
         label='Password',
         error_messages={
-            'required': 'This field can\'t be empty.'
+            'required': 'Type a valid password.'
         },
         help_text='Password must have at least one uppercase and '
         'lowercase letter and one number. The length should be '
@@ -51,7 +79,7 @@ class RegisterForm(forms.ModelForm):
     password2 = forms.CharField(
         label='Confirm password',
         error_messages={
-            'required': 'This field can\'t be empty.'
+            'required': 'Type your password again.'
         },
         widget=forms.PasswordInput(
             attrs={'placeholder': 'Confirm your password'}
@@ -69,20 +97,13 @@ class RegisterForm(forms.ModelForm):
         ]
 
         labels = {
-            'first_name': 'First name',
-            'last_name': 'Last name',
             'username': 'Username',
-            'email': 'E-mail',
         }
 
         error_messages = {
             'username': {
-                'required': 'This field can\'t be empty.',
+                'required': 'Type a valid username.',
             }
-        }
-
-        help_texts = {
-            'email': 'Enter a valid e-mail!',
         }
 
     def clean(self):
