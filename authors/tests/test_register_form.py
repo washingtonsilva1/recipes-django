@@ -1,6 +1,6 @@
 from parameterized import parameterized
 from unittest import TestCase
-from django.test import TestCase as DjangoTestCase
+from .test_register_base import RegisterFormTestBase
 from django.urls import reverse
 from authors.forms import RegisterForm
 
@@ -49,18 +49,7 @@ class RegisterFormUnitTest(TestCase):
         self.assertEqual(current, label)
 
 
-class RegisterFormIntegrationTest(DjangoTestCase):
-    def setUp(self):
-        self.form_data = {
-            'username': 'user1123',
-            'password': 'Str0ngpassword1',
-            'password2': 'Str0ngpassword1',
-            'email': 'mail@example.com',
-            'first_name': 'Joe',
-            'last_name': 'Doe',
-        }
-        return super().setUp()
-
+class RegisterFormIntegrationTest(RegisterFormTestBase):
     @parameterized.expand([
         ('username', 'Type a valid username.'),
         ('password', 'Type a valid password.'),
@@ -91,7 +80,6 @@ class RegisterFormIntegrationTest(DjangoTestCase):
 
     def test_password_fields_doesnt_match(self):
         msg = 'Passwords doesn\'t match.'
-
         self.form_data['password2'] += 'a'
         response = self.client.post(
             reverse('authors:create'), data=self.form_data, follow=True)
@@ -106,9 +94,25 @@ class RegisterFormIntegrationTest(DjangoTestCase):
             reverse('authors:create'), data=self.form_data, follow=True)
         self.assertIn(msg, response.context['form'].errors['password'])
 
+    def test_email_field_gets_an_error_using_an_existing_email(self):
+        msg = 'This email already exists'
+        self.create_user()
+        response = self.client.post(
+            reverse('authors:create'), data=self.form_data, follow=True)
+        self.assertIn(msg, response.context['form'].errors['email'])
+
+    def test_username_field_gets_an_error_if_using_existing_username(self):
+        msg = 'Um usuário com este nome de usuário já existe.'
+        self.create_user()
+        response = self.client.post(
+            reverse('authors:create'),
+            data=self.form_data,
+            follow=True,
+        )
+        self.assertIn(msg, response.context['form'].errors['username'])
+
     def test_register_form_is_creating_user(self):
         msg = 'Your user has been created, please log in!'
-
         response = self.client.post(
             reverse('authors:create'), data=self.form_data, follow=True)
         content = response.content.decode('utf-8')
