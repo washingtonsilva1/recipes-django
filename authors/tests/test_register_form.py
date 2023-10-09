@@ -20,6 +20,11 @@ class RegisterFormUnitTest(TestCase):
         self.assertEqual(current, placeholder)
 
     @parameterized.expand([
+        ('username', (
+            'Username must have letters, numbers and one special character. '
+            'The special characters allowed are: "@+-_". '
+            'It must have at least 8 characters and maximum 150.'
+        )),
         ('password', 'Password must have at least one uppercase and '
          'lowercase letter and one number. The length should be '
          'at least 8 characters.'),
@@ -47,7 +52,7 @@ class RegisterFormUnitTest(TestCase):
 class RegisterFormIntegrationTest(DjangoTestCase):
     def setUp(self):
         self.form_data = {
-            'username': 'user112',
+            'username': 'user1123',
             'password': 'Str0ngpassword1',
             'password2': 'Str0ngpassword1',
             'email': 'mail@example.com',
@@ -69,3 +74,42 @@ class RegisterFormIntegrationTest(DjangoTestCase):
         response = self.client.post(reverse('authors:create'),
                                     data=self.form_data, follow=True)
         self.assertIn(message, response.context['form'].errors[field])
+
+    def test_username_field_less_than_eight_characters(self):
+        self.form_data['username'] = 'joa'
+        msg = 'Your username must have at least 8 characters.'
+        response = self.client.post(reverse('authors:create'),
+                                    data=self.form_data, follow=True)
+        self.assertIn(msg, response.context['form'].errors['username'])
+
+    def test_username_field_bigger_than_max_characters_allowed(self):
+        self.form_data['username'] = 'A'*151
+        msg = 'Your username must have at max 150 characters.'
+        response = self.client.post(reverse('authors:create'),
+                                    data=self.form_data, follow=True)
+        self.assertIn(msg, response.context['form'].errors['username'])
+
+    def test_password_fields_doesnt_match(self):
+        msg = 'Passwords doesn\'t match.'
+
+        self.form_data['password2'] += 'a'
+        response = self.client.post(
+            reverse('authors:create'), data=self.form_data, follow=True)
+        self.assertIn(msg, response.context['form'].errors['password2'])
+
+    def test_password_field_is_not_strong_enough(self):
+        msg = 'You password doesn\'t match the requirements.'
+        self.form_data['password'] = 'abcdefghjkl'
+        self.form_data['password2'] = 'abcdefghjkl'
+
+        response = self.client.post(
+            reverse('authors:create'), data=self.form_data, follow=True)
+        self.assertIn(msg, response.context['form'].errors['password'])
+
+    def test_register_form_is_creating_user(self):
+        msg = 'Your user has been created, please log in!'
+
+        response = self.client.post(
+            reverse('authors:create'), data=self.form_data, follow=True)
+        content = response.content.decode('utf-8')
+        self.assertIn(msg, content)
