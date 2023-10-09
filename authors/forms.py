@@ -4,14 +4,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
-def set_attribute(field, attribute, value):
-    field.widget.attrs[attribute] = value
-
-
-def set_placeholder(field, placeholder):
-    set_attribute(field, 'placeholder', placeholder)
-
-
 def strong_password(password):
     regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
     if not regex.match(password):
@@ -21,12 +13,6 @@ def strong_password(password):
 
 
 class RegisterForm(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        set_placeholder(
-            field=self.fields['username'], placeholder='Ex.: joedoe22')
-
     first_name = forms.CharField(
         label='First name',
         error_messages={
@@ -60,6 +46,26 @@ class RegisterForm(forms.ModelForm):
                 'placeholder': 'Ex.: joedoe@mail.com',
             }
         )
+    )
+    username = forms.CharField(
+        label='Username',
+        error_messages={
+            'required': 'Type a valid username.',
+            'min_length': 'Your username must have at least 8 characters.',
+            'max_length': 'Your username must have at max 150 characters.',
+        },
+        help_text=(
+            'Username must have letters, numbers and one special character. '
+            'The special characters allowed are: "@+-_". '
+            'It must have at least 8 characters and maximum 150.'
+        ),
+        min_length=8,
+        max_length=150,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ex.: joedoe22',
+            }
+        ),
     )
     password = forms.CharField(
         label='Password',
@@ -95,16 +101,6 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]
-
-        labels = {
-            'username': 'Username',
-        }
-
-        error_messages = {
-            'username': {
-                'required': 'Type a valid username.',
-            }
-        }
 
     def clean(self):
         cleaned_data = super().clean()
