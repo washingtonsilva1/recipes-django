@@ -117,3 +117,17 @@ class RegisterFormIntegrationTest(RegisterFormTestBase):
             reverse('authors:create'), data=self.form_data, follow=True)
         content = response.content.decode('utf-8')
         self.assertIn(msg, content)
+
+    def test_created_user_can_login(self):
+        self.form_data.update({
+            'username': 'joedoe22',
+            'password': '@Joedo1ngthis',
+            'password2': '@Joedo1ngthis',
+        })
+        self.client.post(reverse('authors:create'), data=self.form_data)
+        is_auth = self.client.login(
+            username=self.form_data['username'],
+            password=self.form_data['password'],
+            password2=self.form_data['password2'],
+        )
+        self.assertTrue(is_auth)
