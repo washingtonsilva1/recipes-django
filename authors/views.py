@@ -2,13 +2,18 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib import messages
 from .forms import RegisterForm
+from django.urls import reverse
 
 
 # Create your views here.
 def register(req):
     register_form_data = req.session.get('register_form_data', None)
     form = RegisterForm(register_form_data)
-    return render(req, 'authors/pages/registerView.html', {'form': form})
+    return render(req, 'authors/pages/registerView.html',
+                  {
+                      'form': form,
+                      'form_action': reverse('authors:create'),
+                  })
 
 
 def create(req):
