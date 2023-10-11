@@ -1,15 +1,7 @@
-import re
 from django import forms
+from utils.django_form import strong_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-
-
-def strong_password(password):
-    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
-    if not regex.match(password):
-        raise ValidationError(
-            'You password doesn\'t match the requirements.', code='invalid')
-    return True
 
 
 class RegisterForm(forms.ModelForm):
