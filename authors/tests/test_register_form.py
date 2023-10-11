@@ -60,21 +60,21 @@ class RegisterFormIntegrationTest(RegisterFormTestBase):
     ])
     def test_fields_can_not_be_empty(self, field, message):
         self.form_data[field] = ' '
-        response = self.client.post(reverse('authors:create'),
+        response = self.client.post(reverse('authors:register_create'),
                                     data=self.form_data, follow=True)
         self.assertIn(message, response.context['form'].errors[field])
 
     def test_username_field_less_than_eight_characters(self):
         self.form_data['username'] = 'joa'
         msg = 'Your username must have at least 8 characters.'
-        response = self.client.post(reverse('authors:create'),
+        response = self.client.post(reverse('authors:register_create'),
                                     data=self.form_data, follow=True)
         self.assertIn(msg, response.context['form'].errors['username'])
 
     def test_username_field_bigger_than_max_characters_allowed(self):
         self.form_data['username'] = 'A'*151
         msg = 'Your username must have at max 150 characters.'
-        response = self.client.post(reverse('authors:create'),
+        response = self.client.post(reverse('authors:register_create'),
                                     data=self.form_data, follow=True)
         self.assertIn(msg, response.context['form'].errors['username'])
 
@@ -82,7 +82,7 @@ class RegisterFormIntegrationTest(RegisterFormTestBase):
         msg = 'Passwords doesn\'t match.'
         self.form_data['password2'] += 'a'
         response = self.client.post(
-            reverse('authors:create'), data=self.form_data, follow=True)
+            reverse('authors:register_create'), data=self.form_data, follow=True)
         self.assertIn(msg, response.context['form'].errors['password2'])
 
     def test_password_field_is_not_strong_enough(self):
@@ -91,21 +91,21 @@ class RegisterFormIntegrationTest(RegisterFormTestBase):
         self.form_data['password2'] = 'abcdefghjkl'
 
         response = self.client.post(
-            reverse('authors:create'), data=self.form_data, follow=True)
+            reverse('authors:register_create'), data=self.form_data, follow=True)
         self.assertIn(msg, response.context['form'].errors['password'])
 
     def test_email_field_gets_an_error_using_an_existing_email(self):
         msg = 'This email already exists'
         self.create_user()
         response = self.client.post(
-            reverse('authors:create'), data=self.form_data, follow=True)
+            reverse('authors:register_create'), data=self.form_data, follow=True)
         self.assertIn(msg, response.context['form'].errors['email'])
 
     def test_username_field_gets_an_error_if_using_existing_username(self):
         msg = 'Um usuário com este nome de usuário já existe.'
         self.create_user()
         response = self.client.post(
-            reverse('authors:create'),
+            reverse('authors:register_create'),
             data=self.form_data,
             follow=True,
         )
@@ -114,7 +114,7 @@ class RegisterFormIntegrationTest(RegisterFormTestBase):
     def test_register_form_is_creating_user(self):
         msg = 'Your user has been created, please log in!'
         response = self.client.post(
-            reverse('authors:create'), data=self.form_data, follow=True)
+            reverse('authors:register_create'), data=self.form_data, follow=True)
         content = response.content.decode('utf-8')
         self.assertIn(msg, content)
 
@@ -124,7 +124,8 @@ class RegisterFormIntegrationTest(RegisterFormTestBase):
             'password': '@Joedo1ngthis',
             'password2': '@Joedo1ngthis',
         })
-        self.client.post(reverse('authors:create'), data=self.form_data)
+        self.client.post(reverse('authors:register_create'),
+                         data=self.form_data)
         is_auth = self.client.login(
             username=self.form_data['username'],
             password=self.form_data['password'],

@@ -13,5 +13,5 @@ class RegisterViewTest(TestCase):
         self.assertTemplateUsed(response, 'authors/pages/registerView.html')
 
     def test_register_view_raises_404_if_there_is_no_post_request(self):
-        response = self.client.get(reverse('authors:create'))
+        response = self.client.get(reverse('authors:register_create'))
         self.assertEqual(response.status_code, 404)
