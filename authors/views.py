@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib import messages
-from .forms import RegisterForm
+from .forms import RegisterForm, LoginForm
 from django.urls import reverse
 
 
@@ -12,11 +12,11 @@ def register(req):
     return render(req, 'authors/pages/registerView.html',
                   {
                       'form': form,
-                      'form_action': reverse('authors:create'),
+                      'form_action': reverse('authors:register_create'),
                   })
 
 
-def create(req):
+def register_create(req):
     if not req.POST:
         raise Http404()
 
@@ -30,3 +30,15 @@ def create(req):
         messages.success(req, "Your user has been created, please log in!")
         del (req.session['register_form_data'])
     return redirect('authors:register')
+
+
+def login(req):
+    form = LoginForm()
+    return render(req, 'authors/pages/loginView.html', {
+        'form': form,
+        'form_action': reverse('authors:login_create'),
+    })
+
+
+def login_create(req):
+    ...
