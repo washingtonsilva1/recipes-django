@@ -6,7 +6,7 @@ from authors import views
 class RegisterViewTest(TestCase):
     def test_register_is_loading_correct_view(self):
         view = resolve(reverse('authors:register'))
-        self.assertIs(view.func, views.register)
+        self.assertIs(view.func, views.register_view)
 
     def test_register_view_is_rendering_correct_template(self):
         response = self.client.get(reverse('authors:register'))

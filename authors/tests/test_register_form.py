@@ -1,6 +1,6 @@
 from parameterized import parameterized
 from unittest import TestCase
-from .test_register_base import RegisterFormTestBase
+from .test_register_base import FormTestBase
 from django.urls import reverse
 from authors.forms import RegisterForm
 
@@ -49,7 +49,7 @@ class RegisterFormUnitTest(TestCase):
         self.assertEqual(current, label)
 
 
-class RegisterFormIntegrationTest(RegisterFormTestBase):
+class RegisterFormIntegrationTest(FormTestBase):
     @parameterized.expand([
         ('username', 'Type a valid username.'),
         ('password', 'Type a valid password.'),
