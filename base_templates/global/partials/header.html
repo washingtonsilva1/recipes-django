@@ -1,10 +1,19 @@
 <div class="main-header-container">
     <div class="main-header container">
-        <h2>
+        <h2 class="header-object">
             <a class="main-logo" href="{% url 'recipes:home' %}">
                 <i class="fa-solid fa-utensils main-logo-icon"></i>
                 <span class="main-logo-text">Recipes</span>
             </a>
         </h2>
+        {% if request.user.is_authenticated %}
+        <div class="header-object">
+            <form action="{% url "authors:logout" %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="username" value="{{request.user.username}}">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+        {% endif %}
     </div>
 </div>
