@@ -1,5 +1,5 @@
 from authors import views
-from .test_register_base import FormTestBase
+from .test_form_base import FormTestBase
 from django.urls import resolve, reverse
 
 

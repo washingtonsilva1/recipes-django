@@ -1,6 +1,6 @@
 from parameterized import parameterized
 from unittest import TestCase
-from .test_register_base import FormTestBase
+from .test_form_base import FormTestBase
 from django.urls import reverse
 from authors.forms import RegisterForm
 
