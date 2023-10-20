@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class FormTestBase(TestCase):
@@ -15,5 +15,7 @@ class FormTestBase(TestCase):
         super().setUp()
 
     def create_user(self):
-        self.client.post(reverse('authors:register_create'),
-                         data=self.form_data)
+        User.objects.create_user(
+            username=self.form_data['username'],
+            email=self.form_data['email'],
+            password=self.form_data['password'])
