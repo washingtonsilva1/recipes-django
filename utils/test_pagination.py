@@ -1,9 +1,11 @@
+import pytest
 from pagination import make_pagination_range
 from django.urls import reverse
 from unittest.mock import patch
 from recipes.tests.test_recipe_base import RecipeTestBase
 
 
+@pytest.mark.slow
 class PaginationTest(RecipeTestBase):
     def test_pagination_range_returns_a_pagination_range(self):
         pagination = make_pagination_range(
@@ -44,7 +46,7 @@ class PaginationTest(RecipeTestBase):
             current=20)
         self.assertEqual([17, 18, 19, 20], pagination['pagination'])
 
-    @patch('recipes.views.PER_PAGE', new=9)
+    @patch('recipes.views.RECIPES_PER_PAGE', new=9)
     def test_pagination_displaying_nine_recipes_per_page(self):
         for i in range(10):
             kwargs = {'slug': f'recipe-slug-{i}',
