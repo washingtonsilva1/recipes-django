@@ -1,8 +1,9 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from utils.browser import make_chrome_driver
+from recipes.tests.test_recipe_base import RecipeMixin
 
 
-class FunctionalTestBase(StaticLiveServerTestCase):
+class FunctionalTestBase(StaticLiveServerTestCase, RecipeMixin):
     def setUp(self):
         self.chrome = make_chrome_driver()
         super().setUp()
@@ -10,3 +11,6 @@ class FunctionalTestBase(StaticLiveServerTestCase):
     def tearDown(self):
         self.chrome.quit()
         super().tearDown()
+
+    def get_chrome_element(self, filter, element):
+        return self.chrome.get(filter, element)
