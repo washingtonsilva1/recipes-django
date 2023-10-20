@@ -5,8 +5,8 @@ from django.http import Http404
 from utils.pagination import make_pagination
 from django.db.models import Q
 
-PER_PAGE = int(os.environ.get('PER_PAGE', 6))
-PAGES_DISPLAY = int(os.environ.get('PAGES_DISPLAY', 4))
+RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE', 6))
+PAGES_TO_DISPLAY = int(os.environ.get('PAGES_TO_DISPLAY', 4))
 
 
 def home(req):
@@ -14,8 +14,8 @@ def home(req):
     pagination = make_pagination(
         request=req,
         obj_list=recipes,
-        obj_per_page=PER_PAGE,
-        pages_to_display=PAGES_DISPLAY
+        obj_per_page=RECIPES_PER_PAGE,
+        pages_to_display=PAGES_TO_DISPLAY
     )
     return render(req, 'recipes/pages/home.html',
                   {'recipes': pagination['page'],
@@ -29,8 +29,8 @@ def category(req, id):
     pagination = make_pagination(
         request=req,
         obj_list=recipes,
-        obj_per_page=PER_PAGE,
-        pages_to_display=PAGES_DISPLAY
+        obj_per_page=RECIPES_PER_PAGE,
+        pages_to_display=PAGES_TO_DISPLAY
     )
     return render(req, 'recipes/pages/categoryView.html',
                   {'recipes': pagination['page'],
