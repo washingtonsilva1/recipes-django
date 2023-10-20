@@ -3,7 +3,7 @@ from django.test import TestCase
 from recipes.models import Category, Recipe, User
 
 
-class RecipeTestBase(TestCase):
+class RecipeMixin:
     def make_category(self, category_name='Category'):
         return Category.objects.create(name=category_name)
 
@@ -39,3 +39,19 @@ class RecipeTestBase(TestCase):
             category=self.make_category(**category),
             user=self.make_user(**user_data)
         )
+
+    def make_recipe_sample(self, qt=5):
+        recipes = []
+        for i in range(qt):
+            kwargs = {
+                'title': f'Recipe title {i}',
+                'slug': f'recipe-slug-{i}',
+                'user_data': {'username': f'{i}'}
+            }
+            recipes.append(self.make_recipe(**kwargs))
+        return recipes
+
+
+class RecipeTestBase(TestCase, RecipeMixin):
+    def setUp(self):
+        super().setUp()
