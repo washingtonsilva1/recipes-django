@@ -31,6 +31,7 @@ class RegisterForm(forms.ModelForm):
         label='Email',
         error_messages={
             'required': 'Type your email.',
+            'invalid': 'Your email is not valid.',
         },
         help_text='Please, enter a valid email.',
         widget=forms.EmailInput(
