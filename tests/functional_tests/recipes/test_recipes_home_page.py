@@ -1,12 +1,12 @@
 import pytest
 from unittest.mock import patch
-from tests.functional_tests.functional_test_base import FunctionalTestBase
+from .test_recipes_base import FunctionalRecipesTestBase
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
 @pytest.mark.functional_test
-class RecipeHomePageFunctionalTest(FunctionalTestBase):
+class RecipeHomePageFunctionalTest(FunctionalRecipesTestBase):
     @patch('recipes.views.RECIPES_PER_PAGE', new=3)
     def test_recipe_home_page_when_there_are_no_recipes(self):
         self.chrome.get(self.live_server_url)
@@ -33,8 +33,8 @@ class RecipeHomePageFunctionalTest(FunctionalTestBase):
         input.send_keys(Keys.ENTER)
         self.assertIn(
             title_needed,
-            self.get_chrome_element(By.CLASS_NAME,
-                                    'main-content-list').text)
+            self.chrome.find_element(By.CLASS_NAME,
+                                     'main-content-list').text)
 
     @patch('recipes.views.RECIPES_PER_PAGE', new=3)
     def test_recipe_home_pagination_more_than_one_page(self):
