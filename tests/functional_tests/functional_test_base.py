@@ -13,4 +13,4 @@ class FunctionalTestBase(StaticLiveServerTestCase, RecipeMixin):
         super().tearDown()
 
     def get_chrome_element(self, filter, element):
-        return self.chrome.get(filter, element)
+        return self.chrome.find_element(filter, element)
