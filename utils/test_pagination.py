@@ -56,7 +56,7 @@ class PaginationTest(RecipeTestBase):
         paginator = response.context['recipes'].paginator
         self.assertEqual(len(paginator.get_page(1)), 9)
 
-    @patch('recipes.views.PER_PAGE', new=9)
+    @patch('recipes.views.RECIPES_PER_PAGE', new=9)
     def test_pagination_displaying_less_than_nine_recipes(self):
         # that occurs when there are less than nine recipes to display
         for i in range(3):
@@ -67,7 +67,7 @@ class PaginationTest(RecipeTestBase):
         paginator = response.context['recipes'].paginator
         self.assertEqual(len(paginator.get_page(1)), 3)
 
-    @patch('recipes.views.PER_PAGE', new=9)
+    @patch('recipes.views.RECIPES_PER_PAGE', new=9)
     def test_pagination_displaying_correct_amount_of_pages(self):
         for i in range(18):
             kwargs = {'slug': f'recipe-slug-{i}',
