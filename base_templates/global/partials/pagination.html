@@ -1,12 +1,12 @@
 {% if recipes.has_other_pages %}
-    <div class="pagination">
+    <nav class="pagination" aria-label="Navigation">
         <div class="pag-container">
             {% if recipes.has_previous %}
-                <a href="?page={{recipes.previous_page_number}}{{additional_query}}" class="pag-item">
+                <a href="?page={{recipes.previous_page_number}}{{additional_query}}" class="pag-navigator" aria-label="Previous page">
                         <i class="fa-solid fa-chevron-left"></i>                    
                 </a>
             {% else %}
-                <span class="pag-item" disabled>
+                <span class="pag-navigator" disabled>
                     <i class="fa-solid fa-chevron-left"></i>  
                 </span>
             {% endif %}   
@@ -16,7 +16,7 @@
             {% endif %}
             {% for page in pagination_range.pagination %}
                 {% if pagination_range.current == page %}
-                    <span class="pag-item pag-item-active">{{page}}</span>
+                    <span class="pag-item pag-item-active" aria-current="true">{{page}}</span>
                 {% else %}
                     <a href="?page={{page}}{{additional_query}}" class="pag-item">{{page}}</a>
                 {% endif %}                
@@ -26,14 +26,14 @@
                 <a href="?page={{pagination_range.last_page}}{{additional_query}}" class="pag-item">{{pagination_range.last_page}}</a>                
             {% endif %}
             {% if recipes.has_next %}
-                <a href="?page={{recipes.next_page_number}}{{additional_query}}" class="pag-item">
+                <a href="?page={{recipes.next_page_number}}{{additional_query}}" class="pag-navigator" aria-label="Next page">
                         <i class="fa-solid fa-chevron-right"></i>                    
                 </a>
             {% else %}
-                <span class="pag-item" disabled>
+                <span class="pag-navigator" disabled>
                     <i class="fa-solid fa-chevron-right"></i>  
                 </span>
             {% endif %}            
         </div>
-    </div>
+    </nav>
 {% endif %}

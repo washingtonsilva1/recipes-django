@@ -277,7 +277,7 @@ h6 {
     flex-flow: wrap;
 }
 
-.pag-item {
+.pag-item, .pag-navigator {
     padding: 10px 15px;
     margin-right: 5px;
     text-decoration: none;
@@ -286,17 +286,17 @@ h6 {
     border-radius: 5px;
 }
 
-a.pag-item {
+a.pag-item, a.pag-navigator {
     transition: ease-in-out .1s;
 }
 
-a.pag-item:hover {
+a.pag-item:hover, a.pag-navigator:hover {
     color: var(--color-white);
     background-color: var(--color-secondary-hover);
     transition: ease-in-out .1s;
 }
 
-span.pag-item[disabled] {
+span.pag-item[disabled], span.pag-navigator[disabled] {
     color: #a1a1a1;    
     cursor: not-allowed;
 }
