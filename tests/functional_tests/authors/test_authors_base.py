@@ -23,17 +23,3 @@ class FunctionalAuthorsTestBase(StaticLiveServerTestCase, RecipeMixin):
         return form.find_element(
             By.XPATH,
             f'//input[@name="{name}"]')
-
-    def fill_up_form_with_dummies(self, form):
-        dummy_data = {
-            'first_name': 'Dummy',
-            'last_name': 'Test',
-            'email': 'dummy_test@mail.com',
-            'username': 'DummyTest',
-            'password': '#DummyT3st',
-            'password2': '#DummyT3st',
-        }
-        for field in dummy_data:
-            form_field = self.get_input_by_name(form, field)
-            form_field.send_keys(dummy_data[field])
-        return form
