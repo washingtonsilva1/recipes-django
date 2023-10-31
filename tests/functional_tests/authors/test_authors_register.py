@@ -6,6 +6,20 @@ from selenium.webdriver.common.by import By
 
 @pytest.mark.functional_test
 class AuthorsRegisterFunctionalTest(FunctionalAuthorsTestBase):
+    def fill_up_form_with_dummies(self, form):
+        dummy_data = {
+            'first_name': 'Dummy',
+            'last_name': 'Test',
+            'email': 'dummy_test@mail.com',
+            'username': 'DummyTest',
+            'password': '#DummyT3st',
+            'password2': '#DummyT3st',
+        }
+        for field in dummy_data:
+            form_field = self.get_input_by_name(form, field)
+            form_field.send_keys(dummy_data[field])
+        return form
+
     def prepare_form_callback(self, callback):
         self.chrome.get(self.live_server_url +
                         reverse('authors:register'))
