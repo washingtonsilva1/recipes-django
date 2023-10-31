@@ -13,8 +13,8 @@ class LoginFormIntegrationTest(TestCase):
         super().setUp()
 
     @parameterized.expand([
-        ('username', 'Este campo é obrigatório.'),
-        ('password', 'Este campo é obrigatório.'),
+        ('username', 'Username can not be empty.'),
+        ('password', 'Password can not be empty.'),
     ])
     def test_fields_shows_an_error_if_empty(self, field, message):
         self.login_data[field] = ''
