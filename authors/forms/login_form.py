@@ -7,7 +7,12 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Type your username',
-            })
+            }
+        ),
+        error_messages={
+            'required': 'Username can not be empty.',
+        }
+
     )
     password = forms.CharField(
         label='Password',
@@ -15,5 +20,8 @@ class LoginForm(forms.Form):
             attrs={
                 'placeholder': 'Type your password'
             }
-        )
+        ),
+        error_messages={
+            'required': 'Password can not be empty.',
+        }
     )
