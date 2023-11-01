@@ -19,7 +19,8 @@ def home(req):
     )
     return render(req, 'recipes/pages/home.html',
                   {'recipes': pagination['page'],
-                   'pagination_range': pagination['page_range']})
+                   'pagination_range': pagination['page_range'],
+                   'search_bar': True})
 
 
 def category(req, id):
@@ -35,14 +36,18 @@ def category(req, id):
     return render(req, 'recipes/pages/categoryView.html',
                   {'recipes': pagination['page'],
                    'pagination_range': pagination['page_range'],
-                   'title': f'{recipes[0].category.name} - Category | '})
+                   'title': f'{recipes[0].category.name} - Category | ',
+                   'search_bar': True,
+                   })
 
 
 def detail(req, id):
     recipe = get_object_or_404(Recipe, pk=id, is_published=True)
     return render(req, 'recipes/pages/recipeView.html',
                   {'recipe': recipe, 'is_detail_view': True,
-                   'title': f'{recipe.title} | '})
+                   'title': f'{recipe.title} | ',
+                   'search_bar': False,
+                   })
 
 
 def search(req):
@@ -64,5 +69,6 @@ def search(req):
         'search_term': search_term,
         'additional_query': f'&q={search_term}',
         'recipes': pagination['page'],
-        'pagination_range': pagination['page_range']
+        'pagination_range': pagination['page_range'],
+        'search_bar': True,
     })
