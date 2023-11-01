@@ -6,14 +6,45 @@
                 <span class="main-logo-text">Recipes</span>
             </a>
         </h2>
-        {% if request.user.is_authenticated %}
         <div class="header-object">
-            <form action="{% url "authors:logout" %}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="username" value="{{request.user.username}}">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-        {% endif %}
+            <div id="acc-management" aria-expanded="false">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div id="acc-management-container">
+                <ul class="acc-management-options">
+                    {% if user.is_authenticated %}
+                    <li class="acc-option">
+                        <a href="{% url 'authors:dashboard' %}">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span class="acc-option-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="acc-option">
+                        <form action="{% url "authors:logout" %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="username" value="{{request.user.username}}">
+                            <button class="input-link" type="submit">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span class="acc-option-text">Logout</span>
+                            </button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="acc-option">
+                        <a href="{% url 'authors:login' %}">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span class="acc-option-text">Login</span>
+                        </a>
+                    </li>
+                    <li class="acc-option">
+                        <a href="{% url 'authors:register' %}">
+                            <i class="fa-solid fa-pen"></i>
+                            <span class="acc-option-text">Register</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>        
     </div>
 </div>

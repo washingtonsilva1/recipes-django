@@ -13,13 +13,13 @@
     --color-dark-text: #444;
     --color-dark-red: #bb4343;
 
-    --color-success: #59bd77;
-    --color-error: #f14d4d;
-    --color-warning: #ffb65b;
+    --color-success: #7abd8a;
+    --color-error: #fb6d7a;
+    --color-warning: #fff3cd;
 
-    --border-success: #4eb56d;
-    --border-error: #af4848;
-    --border-warning: #ebaa5b;
+    --border-success: #6bad7a;
+    --border-error: #e9646e;
+    --border-warning: #927f40;
     --border-primary: #70b0d5;
 
     --font-primary: sans-serif;
@@ -60,6 +60,12 @@ h6 {
 
 .main-header-container {
     background-color: var(--color-primary-dark);
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .main-logo {
@@ -122,7 +128,7 @@ h6 {
 }
 
 .main-content {
-    padding-top: 0;
+    padding-top: var(--spacing-gutter-md);
 }
 
 .main-content-container {
@@ -393,8 +399,73 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     margin: var(--spacing-gutter-md) 0;
 }
 
+#acc-management {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--color-white);
+    border: 3px solid var(--color-white);
+    padding: 10px 12px;
+    border-radius: 50%;
+}
+
+#acc-management-container {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 100px 40px 10px 0px;
+    padding: var(--spacing-gutter-sm);
+    background-color: var(--color-gray1);
+    border-top: 5px solid var(--color-white);
+    border-bottom: 5px solid var(--color-white);
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#acc-management[aria-expanded="true"] + #acc-management-container {
+    display: block;
+}
+
+.acc-management-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+}
+
+.input-link {
+    color: var(--color-dark-text);
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.acc-management-options .acc-option:not(:last-child) {
+    margin-bottom: var(--spacing-gutter-sm);
+}
+
+.acc-management-options .acc-option a {
+    color: var(--color-dark-text);
+    text-decoration: none;
+}
+
+.acc-management-options .acc-option a, .input-link {
+    font-size: 18px;
+}
+
+.acc-option-text {
+    font-family: var(--font-headings);
+    margin-left: var(--spacing-gutter-sm);
+}
+
 @media(max-width: 600px) {
     .main-content-list, .form-content-grid {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    }
+}
+@media (max-width: 400px) {
+    .main-logo-text {
+       display: none;
     }
 }
