@@ -1,0 +1,8 @@
+{% extends "global/base.html" %}
+{% block title %}Dashboard | {% endblock title %}
+{% block content %}
+    <div class="main-content container center">
+        <h2>Welcome to your dashboard, {{user}}!</h2>
+    </div>
+    {% include "global/partials/messages.html" %}
+{% endblock content %}
