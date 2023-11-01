@@ -1,3 +1,4 @@
+{% if search_bar is not False %}
 <div class="search-conteiner">
     <div class="container">
         <form class="search-form" action="{% url 'recipes:search' %}">
@@ -6,3 +7,4 @@
         </form>
     </div>
 </div>
+{% endif %}
