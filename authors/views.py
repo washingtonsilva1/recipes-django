@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.contrib import messages
 from .forms import RegisterForm, LoginForm
+from recipes.models import Recipe
+from utils.pagination import make_pagination
 from django.urls import reverse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+from recipes.views import PAGES_TO_DISPLAY, RECIPES_PER_PAGE
 
 
 # Create your views here.
 def register_view(req):
+    if req.user.is_authenticated:
+        return redirect('recipes:home')
     register_form_data = req.session.get('register_form_data', None)
     form = RegisterForm(register_form_data)
     return render(
@@ -40,6 +45,8 @@ def register_create(req):
 
 
 def login_view(req):
+    if req.user.is_authenticated:
+        return redirect('recipes:home')
     login_form_data = req.session.get('login_form_data', None)
     form = LoginForm(login_form_data)
     return render(req, 'authors/pages/loginView.html', {
@@ -66,7 +73,7 @@ def login_create(req):
             messages.success(req, 'You have logged in!')
             login(req, user_auth)
             del (req.session['login_form_data'])
-            redirect_to = 'recipes:home'
+            redirect_to = 'authors:dashboard'
         else:
             messages.error(req, 'Incorrect username or password')
     return redirect(redirect_to)
@@ -83,6 +90,17 @@ def logout_view(req):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def dashboard_view(req):
+    recipes = Recipe.objects.filter(
+        user=req.user,
+        is_published=False).order_by('-id')
+    pagination = make_pagination(
+        request=req,
+        obj_list=recipes,
+        obj_per_page=RECIPES_PER_PAGE,
+        pages_to_display=PAGES_TO_DISPLAY,
+    )
     return render(req, 'authors/pages/dashboardView.html', {
+        'recipes': pagination['page'],
+        'pagination_range': pagination['page_range'],
         'search_bar': False,
     })
