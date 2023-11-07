@@ -46,7 +46,7 @@ def register_create(req):
 
 def login_view(req):
     if req.user.is_authenticated:
-        return redirect('recipes:home')
+        return redirect('authors:dashboard')
     login_form_data = req.session.get('login_form_data', None)
     form = LoginForm(login_form_data)
     return render(req, 'authors/pages/loginView.html', {
@@ -81,7 +81,7 @@ def login_create(req):
 
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(req):
-    if not req.POST or req.POST and req.POST.get('username') != req.user.username:
+    if req.POST and req.POST.get('username') != req.user.username:
         return redirect('authors:login')
     logout(req)
     messages.info(req, 'You have sucessfully logged out')
