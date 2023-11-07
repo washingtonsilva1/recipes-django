@@ -52,6 +52,10 @@ h6 {
     font-family: var(--font-headings);
 }
 
+img {
+    max-width: 100%;
+}
+
 .container, .pagination {
     max-width: 1440px;
     margin: 0 auto;
@@ -364,7 +368,9 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     gap: calc(var(--spacing-gutter-sm)/2) calc(var(--spacing-gutter-sm))
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 10px;
     border: 1px solid var(--color-primary-dark);
@@ -380,23 +386,6 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     background-color: var(--color-primary-dark);
     color: var(--color-white);
     font-size: 16px;
-}
-
-/* Generic */
-.d-block {
-    display: block;
-}
-
-.center {
-    text-align: center;
-}
-
-.m-x {
-    margin: 0 var(--spacing-gutter-md);
-}
-
-.m-y {
-    margin: var(--spacing-gutter-md) 0;
 }
 
 #acc-management {
@@ -457,6 +446,27 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
 .acc-option-text {
     font-family: var(--font-headings);
     margin-left: var(--spacing-gutter-sm);
+}
+
+/* Generic */
+.d-block {
+    display: block;
+}
+
+.center {
+    text-align: center;
+}
+
+.m-x {
+    margin: 0 var(--spacing-gutter-md);
+}
+
+.m-y {
+    margin: var(--spacing-gutter-md) 0;
+}
+
+.span-2 {
+    grid-column: span 2;
 }
 
 @media(max-width: 600px) {

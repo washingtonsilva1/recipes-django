@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from django.contrib import messages
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, RecipeEditForm
 from recipes.models import Recipe
 from utils.pagination import make_pagination
 from django.urls import reverse
@@ -102,5 +102,29 @@ def dashboard_view(req):
     return render(req, 'authors/pages/dashboardView.html', {
         'recipes': pagination['page'],
         'pagination_range': pagination['page_range'],
+        'search_bar': False,
+    })
+
+
+@login_required(redirect_field_name='next', login_url='authors:login')
+def dashboard_recipe_edit_view(req, id):
+    recipe = get_object_or_404(Recipe,
+                               pk=id, user=req.user, is_published=False)
+    form = RecipeEditForm(data=req.POST or None,
+                          files=req.FILES or None, instance=recipe)
+
+    if form.is_valid():
+        form_recipe = form.save(commit=False)
+        form_recipe.user = req.user
+        form_recipe.is_published = False
+        form_recipe.preparation_steps_is_html = False
+        form_recipe.save()
+        messages.success(req, 'Your recipe has been updated!')
+        return redirect('authors:dashboard')
+
+    return render(req, 'authors/pages/edit_recipeView.html', {
+        'recipe': recipe,
+        'form': form,
+        'title': f'{recipe.title} | ',
         'search_bar': False,
     })

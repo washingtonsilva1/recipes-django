@@ -1,0 +1,10 @@
+{% extends "global/base.html" %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+<div class="main-content container center">
+    <h2>Edit recipe</h2>
+</div>
+<div class="main-content container">
+    {% include "authors/partials/edit_form.html" %}
+</div>
+{% endblock content %}
