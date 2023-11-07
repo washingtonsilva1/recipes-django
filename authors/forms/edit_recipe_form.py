@@ -1,5 +1,6 @@
 from django import forms
 from recipes.models import Recipe
+from django.core.exceptions import ValidationError
 
 
 class RecipeEditForm(forms.ModelForm):
@@ -48,15 +49,69 @@ class RecipeEditForm(forms.ModelForm):
                 'required': 'This field can not be empty.'
             },
             'preparation_time': {
-                'required': 'This field can not be empty.'
+                'required': 'This field can not be empty.',
+                'invalid': 'Type a valid number.',
             },
             'preparation_time_unit': {
                 'required': 'This field can not be empty.'
             },
             'servings': {
-                'required': 'This field can not be empty.'
+                'required': 'This field can not be empty.',
+                'invalid': 'Type a valid number.',
             },
             'servings_unit': {
                 'required': 'This field can not be empty.'
             },
+            'preparation_steps': {
+                'required': 'This field can not be empty.'
+            },
         }
+
+    def clean_preparation_time(self):
+        preparation_time = self.cleaned_data.get('preparation_time', '')
+        if preparation_time < 1:
+            raise ValidationError(
+                message='Type a number bigger than zero.',
+                code='invalid'
+            )
+        return preparation_time
+
+    def clean_servings(self):
+        servings = self.cleaned_data.get('servings', '')
+        if servings < 1:
+            raise ValidationError(
+                message='Type a number bigger than zero.',
+                code='invalid'
+            )
+        return servings
+
+    def clean_title(self):
+        title = self.cleaned_data.get('title', '')
+        if len(title) < 8:
+            raise ValidationError(
+                message='Your title must have at least 8 characters.',
+                code='invalid'
+            )
+        return title
+
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+        if len(description) < 10:
+            raise ValidationError(
+                message='Your description must have at least 10 characters.',
+                code='invalid'
+            )
+        return description
+
+    def clean(self):
+        super_cleaned = super().clean()
+        title = self.cleaned_data.get('title', '')
+        description = self.cleaned_data.get('description', '')
+        if description.lower() == title.lower():
+            raise ValidationError({
+                'description': ValidationError(
+                    message='Your description and title can not be the same.',
+                    code='invalid'
+                )
+            })
+        return super_cleaned

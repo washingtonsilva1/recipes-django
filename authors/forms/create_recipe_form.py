@@ -107,7 +107,7 @@ class RecipeCreateForm(forms.ModelForm):
         super_cleaned = super().clean()
         title = self.cleaned_data.get('title', '')
         description = self.cleaned_data.get('description', '')
-        if description == title:
+        if description.lower() == title.lower():
             raise ValidationError({
                 'description': ValidationError(
                     message='Your description and title can not be the same.',
