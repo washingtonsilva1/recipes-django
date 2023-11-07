@@ -3,10 +3,6 @@ from recipes.models import Recipe
 
 
 class RecipeEditForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields.get('preparation_steps').widget.attrs['class'] = 'span-2'
-
     class Meta:
         model = Recipe
         fields = [
@@ -29,11 +25,38 @@ class RecipeEditForm(forms.ModelForm):
                 choices=[
                     ('Hora', 'Hora'),
                     ('Minuto', 'Minuto'),
-                ]),
+                ]
+            ),
             'servings_unit': forms.Select(
                 choices=[
                     ('Pessoa', 'Pessoa'),
                     ('Pedaço', 'Pedaço'),
                     ('Porção', 'Porção'),
-                ]),
+                ]
+            ),
+            'preparation_steps': forms.Textarea(
+                attrs={
+                    'class': 'span-2',
+                }
+            )
+        }
+        error_messages = {
+            'title': {
+                'required': 'This field can not be empty.'
+            },
+            'description': {
+                'required': 'This field can not be empty.'
+            },
+            'preparation_time': {
+                'required': 'This field can not be empty.'
+            },
+            'preparation_time_unit': {
+                'required': 'This field can not be empty.'
+            },
+            'servings': {
+                'required': 'This field can not be empty.'
+            },
+            'servings_unit': {
+                'required': 'This field can not be empty.'
+            },
         }
