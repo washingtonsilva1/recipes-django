@@ -41,5 +41,5 @@ class LogoutViewTest(FormTestBase):
                 'username': f'{self.form_data["username"]}1',
             },
             follow=True)
-        self.assertEqual(reverse('authors:login'),
+        self.assertEqual(reverse('authors:dashboard'),
                          response.request.get('PATH_INFO'))
