@@ -13,6 +13,8 @@ urlpatterns = [
     path('register/create/', views.register_create, name='register_create'),
     # Flake8: noqa
     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('dashboard/recipe/new/',
+         views.dashboard_recipe_create_view, name='recipe_create'),
     path('dashboard/recipe/<int:id>/edit/',
          views.dashboard_recipe_edit_view, name='recipe_edit'),
 ]

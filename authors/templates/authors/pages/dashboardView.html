@@ -2,14 +2,13 @@
 {% block title %}Dashboard | {% endblock title %}
 {% block content %}
     {% include "global/partials/messages.html" %}
-    <div class="d-block center m-y">
+    <div class="d-block m-y m-x text-right">
         <h2>Welcome to your dashboard, {{user}}!</h2>
+    </div>
+    <div class="d-block center m-y">
         <h1>Your recipes</h1>
         <div class="recipe-management">
-            <ul class="recipe-management-options">
-                <li class="recipe-option">Add</li>
-                <li class="recipe-option">Remove</li>
-            </ul>
+            <a href="{% url "authors:recipe_create" %}" class="btn-link btn-link-success"><i class="fa-solid fa-plus"></i> New recipe</a>
         </div>
     </div>
     <div class="main-content main-content-list container">

@@ -448,6 +448,25 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     margin-left: var(--spacing-gutter-sm);
 }
 
+.recipe-management {
+    display: flex;
+    gap: 10px;
+    margin: 0 var(--spacing-gutter-lg);
+}
+
+.btn-link {
+    padding: 10px;
+    background-color: gray;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.btn-link-success {
+    background-color: var(--color-success);
+    color: var(--color-white);
+    border: 1px solid var(--border-success);
+}
+
 /* Generic */
 .d-block {
     display: block;
@@ -458,15 +477,25 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
 }
 
 .m-x {
-    margin: 0 var(--spacing-gutter-md);
+    margin-left: var(--spacing-gutter-lg);
+    margin-right: var(--spacing-gutter-lg);
 }
 
 .m-y {
-    margin: var(--spacing-gutter-md) 0;
+    margin-top: var(--spacing-gutter-md);
+    margin-bottom: var(--spacing-gutter-md);
 }
 
 .span-2 {
     grid-column: span 2;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
 }
 
 @media(max-width: 600px) {

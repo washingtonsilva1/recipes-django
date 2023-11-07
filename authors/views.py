@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from django.contrib import messages
-from .forms import RegisterForm, LoginForm, RecipeEditForm
+from .forms import RegisterForm, LoginForm, RecipeEditForm, RecipeCreateForm
 from recipes.models import Recipe
 from utils.pagination import make_pagination
 from django.urls import reverse
+from django.utils.text import slugify
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from recipes.views import PAGES_TO_DISPLAY, RECIPES_PER_PAGE
@@ -127,4 +128,25 @@ def dashboard_recipe_edit_view(req, id):
         'form': form,
         'title': f'{recipe.title} | ',
         'search_bar': False,
+    })
+
+
+@login_required(redirect_field_name='next', login_url='authors:login')
+def dashboard_recipe_create_view(req):
+    form = RecipeCreateForm(data=req.POST or None, files=req.FILES or None)
+
+    if form.is_valid():
+        recipe = form.save(commit=False)
+        recipe.user = req.user
+        recipe.slug = slugify(recipe.title)
+        recipe.preparation_steps_is_htmp = False
+        recipe.is_published = False
+        recipe.save()
+        messages.success(req, 'Your recipe has been created!')
+        return redirect('authors:dashboard')
+
+    return render(req, 'authors/pages/create_recipeView.html', {
+        'title': 'Create a recipe | ',
+        'search_bar': False,
+        'form': form,
     })
