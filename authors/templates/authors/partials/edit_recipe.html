@@ -42,4 +42,13 @@
             <span>Edit</span>
         </a>
     </div>
+    <div class="recipe-footer">
+        <form class="delete_recipe_form" action="{% url 'authors:recipe_delete' recipe.id %}" method="POST">
+            {% csrf_token %}
+            <button class="input-delete button-red button-full-width" type="submit">
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete</span>
+            </button>
+        </form>
+    </div>
 </div>

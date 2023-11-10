@@ -230,9 +230,9 @@ img {
     font-size: 16px;
 }
 
-.recipe-footer a {
+.recipe-footer .button, .recipe-footer button.input-delete {
+    font-size: inherit;
     display: block;
-    background-color: var(--color-primary-dark);
     color: var(--color-white);
     text-align: center;
     flex-flow: row nowrap;
@@ -241,9 +241,31 @@ img {
     transition: all .2s ease-in-out;
 }
 
-.recipe-footer a:hover {
+.recipe-footer .button-full-width {
+    width: 100%;
+}
+
+.button-dark {
+    background-color: var(--color-primary-dark);
+}
+
+.button-red {
+    background-color: var(--color-error);
+}
+
+.recipe-footer .button-red:hover {
+    filter: brightness(1.25);
+    transition: all .2s ease-in-out;
+}
+
+.recipe-footer .button-dark:hover {
     filter: brightness(2);
     transition: all .2s ease-in-out;
+}
+
+button.input-delete {
+    cursor: pointer;
+    border: none;
 }
 
 .preparation-steps {

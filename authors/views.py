@@ -150,3 +150,18 @@ def dashboard_recipe_create_view(req):
         'search_bar': False,
         'form': form,
     })
+
+
+@login_required(redirect_field_name='next', login_url='authors:login')
+def dashboard_recipe_delete_view(req, id):
+    if not req.POST:
+        raise Http404()
+    recipe = get_object_or_404(
+        Recipe,
+        id=id,
+        user=req.user,
+        is_published=False
+    )
+    recipe.delete()
+    messages.success(req, 'Your recipe has been deleted!')
+    return redirect('authors:dashboard')
