@@ -34,6 +34,44 @@ class DashboardRecipeEditFormTest(DashboardTestBase):
             data=self.form_data)
         self.assertIn(error, response.context['form'].errors[field])
 
+    @parameterized.expand([
+        ('servings', 'Type a number bigger than zero.'),
+        ('preparation_time', 'Type a number bigger than zero.'),
+    ])
+    def test_fields_can_not_be_lower_than_one(self, field, error):
+        self.form_data[field] = '0'
+        self.create_unpublished_recipe()
+        response = self.client.post(
+            reverse('authors:recipe_edit', args=(1,)),
+            data=self.form_data
+        )
+        self.assertIn(error, response.context['form'].errors[field])
+
+    @parameterized.expand([
+        ('title', 'Your title must have at least 8 characters.'),
+        ('description', 'Your description must have at least 10 characters.'),
+    ])
+    def test_field_lower_than_the_expected(self, field, error):
+        self.form_data[field] = 'A'*5
+        self.create_unpublished_recipe()
+        response = self.client.post(
+            reverse('authors:recipe_edit', args=(1,)),
+            data=self.form_data
+        )
+        self.assertIn(error, response.context['form'].errors[field])
+
+    def test_fields_title_and_description_need_to_be_different(self):
+        self.form_data['description'] = self.form_data['title']
+        self.create_unpublished_recipe()
+        response = self.client.post(
+            reverse('authors:recipe_edit', args=(1,)),
+            data=self.form_data
+        )
+        self.assertIn(
+            'Your description and title can not be the same.',
+            response.context['form'].errors['description']
+        )
+
     def test_form_is_updating_a_recipe(self):
         title_needed = 'That is what I am looking for'
         self.form_data['title'] = title_needed
