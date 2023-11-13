@@ -1,92 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
-from django.contrib import messages
-from .forms import RegisterForm, LoginForm, RecipeEditForm, RecipeCreateForm
 from recipes.models import Recipe
-from utils.pagination import make_pagination
-from django.urls import reverse
-from django.utils.text import slugify
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 from recipes.views import PAGES_TO_DISPLAY, RECIPES_PER_PAGE
+from utils.pagination import make_pagination
+from authors.forms.edit_recipe_form import RecipeEditForm
+from authors.forms.create_recipe_form import RecipeCreateForm
 
-
-# Create your views here.
-def register_view(req):
-    if req.user.is_authenticated:
-        return redirect('recipes:home')
-    register_form_data = req.session.get('register_form_data', None)
-    form = RegisterForm(register_form_data)
-    return render(
-        req,
-        'authors/pages/registerView.html',
-        {
-            'form': form,
-            'form_action': reverse('authors:register_create'),
-            'search_bar': False,
-        }
-    )
-
-
-def register_create(req):
-    if not req.POST:
-        raise Http404()
-
-    POST = req.POST
-    req.session['register_form_data'] = POST
-    form = RegisterForm(POST)
-    if form.is_valid():
-        user = form.save(commit=False)
-        user.set_password(user.password)
-        user.save()
-        messages.success(req, "Your user has been created, please log in!")
-        del (req.session['register_form_data'])
-        return redirect('authors:login')
-    return redirect('authors:register')
-
-
-def login_view(req):
-    if req.user.is_authenticated:
-        return redirect('authors:dashboard')
-    login_form_data = req.session.get('login_form_data', None)
-    form = LoginForm(login_form_data)
-    return render(req, 'authors/pages/loginView.html', {
-        'form': form,
-        'form_action': reverse('authors:login_create'),
-        'search_bar': False,
-    })
-
-
-def login_create(req):
-    if not req.POST:
-        raise Http404()
-
-    POST = req.POST
-    req.session['login_form_data'] = POST
-    form = LoginForm(POST)
-    redirect_to = 'authors:login'
-    if form.is_valid():
-        user_auth = authenticate(
-            username=form.cleaned_data.get('username', ''),
-            password=form.cleaned_data.get('password', ''),
-        )
-        if user_auth is not None:
-            messages.success(req, 'You have logged in!')
-            login(req, user_auth)
-            del (req.session['login_form_data'])
-            redirect_to = 'authors:dashboard'
-        else:
-            messages.error(req, 'Incorrect username or password')
-    return redirect(redirect_to)
-
-
-@login_required(login_url='authors:login', redirect_field_name='next')
-def logout_view(req):
-    if req.POST and req.POST.get('username') != req.user.username:
-        return redirect('authors:login')
-    logout(req)
-    messages.info(req, 'You have sucessfully logged out')
-    return redirect('authors:login')
+from django.shortcuts import redirect, render, get_object_or_404
+from django.http import Http404
+from django.utils.text import slugify
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
