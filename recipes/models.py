@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
-from django.urls import reverse
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -36,3 +37,8 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipes:detail', args=(self.pk,))
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)

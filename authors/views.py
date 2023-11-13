@@ -116,6 +116,7 @@ def dashboard_recipe_edit_view(req, id):
 
     if form.is_valid():
         form_recipe = form.save(commit=False)
+        form_recipe.slug = slugify(form_recipe.title)
         form_recipe.user = req.user
         form_recipe.is_published = False
         form_recipe.preparation_steps_is_html = False
@@ -138,7 +139,6 @@ def dashboard_recipe_create_view(req):
     if form.is_valid():
         recipe = form.save(commit=False)
         recipe.user = req.user
-        recipe.slug = slugify(recipe.title)
         recipe.preparation_steps_is_htmp = False
         recipe.is_published = False
         recipe.save()
