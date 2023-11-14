@@ -5,7 +5,6 @@ from authors.forms.edit_recipe_form import RecipeEditForm
 from authors.forms.create_recipe_form import RecipeCreateForm
 from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import Http404
 from django.utils.text import slugify
 from django.contrib import messages
 from django.utils.decorators import method_decorator
@@ -30,29 +29,7 @@ def dashboard_view(req):
     })
 
 
-@login_required(redirect_field_name='next', login_url='authors:login')
-def dashboard_recipe_delete_view(req):
-    if not req.POST:
-        raise Http404()
-
-    post_data = req.POST
-
-    recipe = get_object_or_404(
-        Recipe,
-        id=post_data.get('recipe_id'),
-        user=req.user,
-        is_published=False
-    )
-    recipe.delete()
-    messages.success(req, 'Your recipe has been deleted!')
-    return redirect('authors:dashboard')
-
-
-@method_decorator(
-    login_required(redirect_field_name='next', login_url='authors:login'),
-    name='dispatch'
-)
-class DashboardRecipeEdit(View):
+class DashboardRecipeView(View):
     def get_recipe(self, id):
         return get_object_or_404(
             Recipe,
@@ -61,21 +38,28 @@ class DashboardRecipeEdit(View):
             is_published=False
         )
 
-    def get_page(self, form, recipe):
+    def get_page(self, **kwargs):
         return render(
             self.request,
             'authors/pages/edit_recipeView.html',
-            {
-                'title': f'{recipe.title} | ',
-                'form': form,
-                'search_bar': False,
-            }
+            kwargs
         )
 
+
+@method_decorator(
+    login_required(redirect_field_name='next', login_url='authors:login'),
+    name='dispatch'
+)
+class DashboardRecipeEdit(DashboardRecipeView):
     def get(self, *args, **kwargs):
         recipe = self.get_recipe(kwargs.get('id'))
         form = RecipeEditForm(instance=recipe)
-        return self.get_page(form, recipe)
+        return self.get_page(
+            form=form,
+            recipe=recipe,
+            search_bar=False,
+            title=f'{recipe.title} | '
+        )
 
     def post(self, *args, **kwargs):
         recipe = self.get_recipe(kwargs.get('id'))
@@ -93,33 +77,31 @@ class DashboardRecipeEdit(View):
             r.save()
             messages.success(self.request, 'Your recipe has been updated!')
             return redirect('authors:dashboard')
-        return self.get_page(form, recipe)
+        return self.get_page(
+            form=form,
+            recipe=recipe,
+            search_bar=False,
+            title=f'{recipe.title} | '
+        )
 
 
 @method_decorator(
     login_required(redirect_field_name='next', login_url='authors:login'),
     name='dispatch'
 )
-class DashboardRecipeCreate(View):
-    def get_page(self, form):
-        return render(
-            self.request,
-            'authors/pages/edit_recipeView.html',
-            {
-                'title': 'Create | ',
-                'form': form,
-                'search_bar': False,
-            }
-        )
-
-    def get(self):
+class DashboardRecipeCreate(DashboardRecipeView):
+    def get(self, *args, **kwargs):
         form = RecipeCreateForm(
             data=self.request.POST or None,
             files=self.request.FILES or None
         )
-        return self.get_page(form)
+        return self.get_page(
+            form=form,
+            title='Create a recipe | ',
+            search_bar=False
+        )
 
-    def post(self):
+    def post(self, *args, **kwargs):
         form = RecipeCreateForm(
             data=self.request.POST or None,
             files=self.request.FILES or None
@@ -132,4 +114,20 @@ class DashboardRecipeCreate(View):
             r.save()
             messages.success(self.request, 'Your recipe has been created!')
             return redirect('authors:dashboard')
-        return self.get_page(form)
+        return self.get_page(
+            form=form,
+            title='Create a recipe | ',
+            search_bar=False
+        )
+
+
+@method_decorator(
+    login_required(redirect_field_name='next', login_url='authors:login'),
+    name='dispatch'
+)
+class DashboardRecipeDelete(DashboardRecipeView):
+    def post(self, *args, **kwargs):
+        recipe = self.get_recipe(self.request.POST.get('recipe_id'))
+        recipe.delete()
+        messages.success(self.request, 'Your recipe has been deleted!')
+        return redirect('authors:dashboard')
