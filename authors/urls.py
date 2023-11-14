@@ -14,9 +14,9 @@ urlpatterns = [
     # Flake8: noqa
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('dashboard/recipe/create/',
-         views.dashboard_recipe_create_view, name='recipe_create'),
+         views.DashboardRecipeCreate.as_view(), name='recipe_create'),
     path('dashboard/recipe/delete/',
          views.dashboard_recipe_delete_view, name='recipe_delete'),
     path('dashboard/recipe/<int:id>/update/',
-         views.dashboard_recipe_edit_view, name='recipe_edit'),
+         views.DashboardRecipeEdit.as_view(), name='recipe_edit'),
 ]
