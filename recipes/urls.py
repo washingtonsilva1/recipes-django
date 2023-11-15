@@ -18,7 +18,11 @@ urlpatterns = [
         views.RecipesCategoryView.as_view(),
         name='category'
     ),
-    path('recipes/<int:id>/', views.detail, name='detail'),
+    path(
+        'recipes/<int:pk>/',
+        views.RecipeDetailView.as_view(),
+        name='detail'
+    ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
