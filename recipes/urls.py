@@ -7,9 +7,17 @@ from django.conf import settings
 app_name = 'recipes'
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('recipes/search/', views.search, name='search'),
-    path('recipes/category/<int:id>/', views.category, name='category'),
+    path('', views.RecipesHomeView.as_view(), name='home'),
+    path(
+        'recipes/search/',
+        views.RecipesSearchView.as_view(),
+        name='search'
+    ),
+    path(
+        'recipes/category/<int:id>/',
+        views.RecipesCategoryView.as_view(),
+        name='category'
+    ),
     path('recipes/<int:id>/', views.detail, name='detail'),
 ]
 
