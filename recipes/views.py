@@ -1,6 +1,6 @@
 import os
 from .models import Recipe
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import get_list_or_404
 from django.http import Http404
 from utils.pagination import make_pagination
 from django.db.models import Q
@@ -9,15 +9,6 @@ from django.views.generic import ListView, DetailView
 
 RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE', 6))
 PAGES_TO_DISPLAY = int(os.environ.get('PAGES_TO_DISPLAY', 4))
-
-
-def detail(req, id):
-    recipe = get_object_or_404(Recipe, pk=id, is_published=True)
-    return render(req, 'recipes/pages/recipeView.html',
-                  {'recipe': recipe, 'is_detail_view': True,
-                   'title': f'{recipe.title} | ',
-                   'search_bar': False,
-                   })
 
 
 class RecipesListView(ListView):
