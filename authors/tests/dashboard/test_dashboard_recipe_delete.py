@@ -5,7 +5,7 @@ from django.urls import reverse
 class DashboardRecipeDeleteTest(DashboardTestBase):
     def test_dashboard_recipe_delete_view_can_not_accept_get(self):
         response = self.client.get(reverse('authors:recipe_delete'))
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 405)
 
     def test_dashboard_recipe_delete_view_deletes_a_recipe(self):
         recipe = self.create_unpublished_recipe()

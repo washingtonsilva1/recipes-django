@@ -8,7 +8,7 @@ from .test_dashboard_base import DashboardTestBase
 class DashboardRecipeEditViewTest(DashboardTestBase):
     def test_dashboard_recipe_edit_is_loading_correct_view(self):
         view = resolve(reverse('authors:recipe_edit', kwargs={'id': 1}))
-        self.assertIs(view.func, views.dashboard_recipe_edit_view)
+        self.assertIs(view.func.view_class, views.DashboardRecipeEdit)
 
     def test_dashboard_recipe_edit_is_using_correct_template(self):
         self.create_unpublished_recipe()
