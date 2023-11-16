@@ -1,9 +1,10 @@
 import os
 from .models import Recipe
 from django.shortcuts import get_list_or_404
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from utils.pagination import make_pagination
 from django.db.models import Q
+from django.forms.models import model_to_dict
 
 from django.views.generic import ListView, DetailView
 
@@ -38,6 +39,13 @@ class RecipesListView(ListView):
             'search_bar': True
         })
         return ctx
+
+
+class RecipeApiListView(RecipesListView):
+    def render_to_response(self, context, **response_kwargs):
+        queryset = self.get_context_data().get('recipes')
+        recipes = list(queryset.object_list.values())
+        return JsonResponse(recipes, safe=False)
 
 
 class RecipesHomeView(RecipesListView):
@@ -106,3 +114,27 @@ class RecipeDetailView(DetailView):
             'search_bar': False,
         })
         return ctx
+
+
+class RecipeDetailApiView(RecipeDetailView):
+    def render_to_response(self, context, **response_kwargs):
+        recipe = self.get_context_data().get('recipe')
+        recipe_dict = model_to_dict(recipe)
+        if recipe_dict['cover']:
+            recipe_dict['cover'] = self.request.build_absolute_uri('/') + \
+                recipe_dict['cover'].url[1:]
+        else:
+            recipe_dict['cover'] = ''
+        del ([
+            recipe_dict['is_published'],
+            recipe_dict['preparation_steps_is_html']
+        ])
+        recipe_dict.update({
+            'user': recipe.user.username,
+            'created_at': str(recipe.created_at),
+            'updated_at': str(recipe.updated_at),
+        })
+        return JsonResponse(
+            recipe_dict,
+            safe=False
+        )

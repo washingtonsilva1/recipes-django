@@ -14,6 +14,11 @@ urlpatterns = [
         name='search'
     ),
     path(
+        'recipes/api/v1/',
+        views.RecipeApiListView.as_view(),
+        name='recipes_api'
+    ),
+    path(
         'recipes/category/<int:id>/',
         views.RecipesCategoryView.as_view(),
         name='category'
@@ -22,6 +27,11 @@ urlpatterns = [
         'recipes/<int:pk>/',
         views.RecipeDetailView.as_view(),
         name='detail'
+    ),
+    path(
+        'recipes/api/v1/<int:pk>/',
+        views.RecipeDetailApiView.as_view(),
+        name='detail_api'
     ),
 ]
 
