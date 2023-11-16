@@ -23,6 +23,7 @@ class RecipesListView(ListView):
         qs = qs.filter(
             is_published=True
         )
+        qs = qs.select_related('user', 'category')
         return qs
 
     def get_context_data(self, *args, **kwargs):
@@ -104,6 +105,7 @@ class RecipeDetailView(DetailView):
         qs = qs.filter(
             is_published=True
         )
+        qs = qs.select_related('user')
         return qs
 
     def get_context_data(self, *args, **kwargs):
