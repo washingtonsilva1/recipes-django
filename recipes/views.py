@@ -1,11 +1,13 @@
 import os
+
 from .models import Recipe
+from utils.pagination import make_pagination
+from tag.models import Tag
+
 from django.shortcuts import get_list_or_404
 from django.http import Http404, JsonResponse
-from utils.pagination import make_pagination
 from django.db.models import Q
 from django.forms.models import model_to_dict
-
 from django.views.generic import ListView, DetailView
 
 RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE', 6))
@@ -106,6 +108,7 @@ class RecipeDetailView(DetailView):
             is_published=True
         )
         qs = qs.select_related('user')
+        qs = qs.prefetch_related('tags')
         return qs
 
     def get_context_data(self, *args, **kwargs):
@@ -140,3 +143,28 @@ class RecipeDetailApiView(RecipeDetailView):
             recipe_dict,
             safe=False
         )
+
+
+class RecipesTagView(RecipesListView):
+    template_name = 'recipes/pages/tag.html'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        slug = self.kwargs.get('slug', '')
+        qs = qs.filter(
+            tags__slug=slug
+        )
+        return qs
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        slug = self.kwargs.get('slug', '')
+        tag_title = Tag.objects.filter(
+            slug=slug
+        ).first()
+        if not tag_title:
+            tag_title = 'No recipes found'
+        ctx.update({
+            'title': tag_title,
+        })
+        return ctx
