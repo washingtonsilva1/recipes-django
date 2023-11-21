@@ -489,6 +489,23 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     border: 1px solid var(--border-success);
 }
 
+.tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 10px;
+    margin-top: var(--spacing-gutter-sm);
+}
+
+.tags-list-item {
+    color: var(--color-white);
+    /* font-weight: bold; */
+    text-decoration: none;
+    padding: 5px;
+    background-color: rgb(123, 170, 240);
+    border-radius: 5px;
+}
+
 /* Generic */
 .d-block {
     display: block;

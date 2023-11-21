@@ -72,12 +72,12 @@
         </div>
         {% if recipe.tags.all %}
         <div class="tags-container-list">
-            <p>Tags:</p>
-            <ul class="tags-list">
+            <h3>Tags:</h3>
+            <div class="tags-list">
                 {% for tag in recipe.tags.all %}
-                    <a href="{% url "recipes:search_tag" tag.slug %}"><li>{{tag}}</li></a>
+                    <a class="tags-list-item" href="{% url "recipes:search_tag" tag.slug %}">{{tag}}</a>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
         {% endif %}
     {% endif %}
