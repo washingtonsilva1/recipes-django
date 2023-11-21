@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recipes.apps.RecipesConfig',
     'authors.apps.AuthorsConfig',
+    'tag.apps.TagConfig',
     'debug_toolbar',
 ]
 
