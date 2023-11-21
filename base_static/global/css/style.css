@@ -268,7 +268,7 @@ button.input-delete {
     border: none;
 }
 
-.preparation-steps {
+.preparation-steps, .tags-container-list {
     padding: var(--spacing-gutter-md);
 }
 

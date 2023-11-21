@@ -70,5 +70,15 @@
                 {{recipe.preparation_steps|linebreaksbr}}
             {% endif %}
         </div>
+        {% if recipe.tags.all %}
+        <div class="tags-container-list">
+            <p>Tags:</p>
+            <ul class="tags-list">
+                {% for tag in recipe.tags.all %}
+                    <a href="{% url "recipes:search_tag" tag.slug %}"><li>{{tag}}</li></a>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     {% endif %}
 </div>
