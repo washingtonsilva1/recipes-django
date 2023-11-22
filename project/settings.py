@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+
 from django.contrib.messages import constants
+
+from utils.utils import parse_str_to_list
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +32,14 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('DEBUG') == '1' else False
 
-ALLOWED_HOSTS = []  # type:ignore
+ALLOWED_HOSTS = parse_str_to_list(
+    os.environ.get('ALLOWED_HOSTS', ''),
+    ','
+)
+CSRF_TRUSTED_ORIGINS = parse_str_to_list(
+    os.environ.get('CSRF_TRUSTED_ORIGINS', ''),
+    ','
+)
 
 
 # Application definition
