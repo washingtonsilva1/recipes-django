@@ -1,5 +1,5 @@
 import pytest
-from pagination import make_pagination_range
+from utils.pagination import make_pagination_range
 from django.urls import reverse
 from unittest.mock import patch
 from recipes.tests.test_recipe_base import RecipeTestBase
