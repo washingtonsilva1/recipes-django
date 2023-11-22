@@ -3,7 +3,6 @@ from tag.models import Tag
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.auth.models import User
 
 
@@ -34,7 +33,7 @@ class Recipe(models.Model):
                                  on_delete=models.SET_NULL, null=True,
                                  blank=True, default=None)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    tags = GenericRelation(Tag, related_query_name='recipes')
+    tags = models.ManyToManyField(to=Tag)
 
     def __str__(self):
         return self.title
