@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 # Create your models here.
@@ -40,6 +41,21 @@ class Recipe(models.Model):
 
     def get_absolute_url(self):
         return reverse('recipes:detail', args=(self.pk,))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        recipe_from_db = Recipe.objects.filter(
+            title__iexact=self.title
+        ).first()
+        if recipe_from_db and recipe_from_db.pk != self.pk:
+            raise ValidationError({
+                'title': ValidationError(
+                    message='A recipe with this title already exists, ' +
+                    'try another one.',
+                    code='invalid'
+                )
+            })
+        return cleaned_data
 
     def save(self, *args, **kwargs):
         if not self.slug:
