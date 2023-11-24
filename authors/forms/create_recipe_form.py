@@ -76,6 +76,20 @@ class RecipeCreateForm(forms.ModelForm):
             )
         return preparation_time
 
+    def clean_preparation_time_unit(self):
+        preparation_time_unit = self.cleaned_data.get(
+            'preparation_time_unit',
+            ''
+        )
+        field = self.fields.get('preparation_time_unit')
+        choices = [v for v, k in field.widget.choices]
+        if preparation_time_unit not in choices:
+            raise ValidationError(
+                message='Invalid preparation time unit.',
+                code='invalid'
+            )
+        return preparation_time_unit
+
     def clean_servings(self):
         servings = self.cleaned_data.get('servings', '')
         if servings < 1:
@@ -84,6 +98,17 @@ class RecipeCreateForm(forms.ModelForm):
                 code='invalid'
             )
         return servings
+
+    def clean_servings_unit(self):
+        servings_unit = self.cleaned_data.get('servings_unit', '')
+        field = self.fields.get('servings_unit')
+        choices = [v for v, k in field.widget.choices]
+        if servings_unit not in choices:
+            raise ValidationError(
+                message='Invalid servings unit.',
+                code='invalid'
+            )
+        return servings_unit
 
     def clean_title(self):
         title = self.cleaned_data.get('title', '')
