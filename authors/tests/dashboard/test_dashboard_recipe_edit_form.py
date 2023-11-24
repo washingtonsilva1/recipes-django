@@ -73,13 +73,13 @@ class DashboardRecipeEditFormTest(DashboardTestBase):
         )
         self.assertIn(error, response.context['form'].errors[field])
 
-    def test_recipe_can_not_have_an_existed_title(self):
+    def test_recipe_can_not_have_an_existing_title(self):
         title_to_use = 'A random recipe title'
         self.form_data['title'] = title_to_use
         self.create_unpublished_recipe(title=title_to_use)
-        self.create_unpublished_recipe()
+        recipe = self.create_unpublished_recipe()
         response = self.client.post(
-            reverse('authors:recipe_edit', args=(2,)),
+            reverse('authors:recipe_edit', args=(recipe.pk,)),
             data=self.form_data,
         )
         self.assertIn(

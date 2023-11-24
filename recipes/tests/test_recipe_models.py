@@ -11,7 +11,7 @@ class TestRecipeModel(RecipeTestBase):
 
     def make_recipe_no_defaults(self):
         recipe = Recipe(
-            title='Recipe\'s Title',
+            title='Recipe\'s Title Two',
             description='Recipe\'s Description',
             slug='recipe-slug-2', preparation_time=1,
             preparation_time_unit='Minutos', servings=1,
