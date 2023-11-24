@@ -48,6 +48,19 @@ class DashboardRecipeEditFormTest(DashboardTestBase):
         self.assertIn(error, response.context['form'].errors[field])
 
     @parameterized.expand([
+        ('servings_unit', 'Invalid servings unit.'),
+        ('preparation_time_unit', 'Invalid preparation time unit.'),
+    ])
+    def test_select_fields_can_not_be_changed(self, field, error):
+        self.form_data[field] = 'ThisIsNotAValidValue'
+        self.create_unpublished_recipe()
+        response = self.client.post(
+            reverse('authors:recipe_edit', args=(1,)),
+            data=self.form_data
+        )
+        self.assertIn(error, response.context['form'].errors[field])
+
+    @parameterized.expand([
         ('title', 'Your title must have at least 8 characters.'),
         ('description', 'Your description must have at least 10 characters.'),
     ])

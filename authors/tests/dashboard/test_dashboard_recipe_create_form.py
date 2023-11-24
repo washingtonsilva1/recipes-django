@@ -70,6 +70,18 @@ class DashboardRecipeCreateFormTest(DashboardTestBase):
         )
         self.assertIn(error, response.context['form'].errors[field])
 
+    @parameterized.expand([
+        ('servings_unit', 'Invalid servings unit.'),
+        ('preparation_time_unit', 'Invalid preparation time unit.'),
+    ])
+    def test_select_fields_can_not_be_changed(self, field, error):
+        self.form_data[field] = 'ThisIsNotAValidValue'
+        response = self.client.post(
+            reverse('authors:recipe_create'),
+            data=self.form_data
+        )
+        self.assertIn(error, response.context['form'].errors[field])
+
     def test_recipe_create_form_is_creating_a_recipe(self):
         response = self.client.post(
             reverse('authors:recipe_create'),
