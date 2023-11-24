@@ -47,7 +47,20 @@ class DashboardRecipeCreateFormTest(DashboardTestBase):
         )
         self.assertIn(error, response.context['form'].errors[field])
 
-    def test_recipe_can_not_have_same_title_and_description(self):
+    def test_recipe_can_not_have_an_existed_title(self):
+        title_to_use = 'A random recipe title'
+        self.form_data['title'] = title_to_use
+        self.create_unpublished_recipe(title=title_to_use)
+        response = self.client.post(
+            reverse('authors:recipe_create'),
+            data=self.form_data,
+        )
+        self.assertIn(
+            'A recipe with this title already exists, try another one.',
+            response.context['form'].errors['title']
+        )
+
+    def test_fields_title_and_description_need_to_be_different(self):
         self.form_data['description'] = self.form_data['title']
         response = self.client.post(
             reverse('authors:recipe_create'),
