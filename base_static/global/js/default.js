@@ -14,4 +14,9 @@ window.onload = function(ev) {
             }
         });
     })
+    document.querySelector('a.user-management-logout').addEventListener('click', function(ev) {
+        ev.preventDefault()
+        form = document.getElementById('user-management-logout')
+        form.submit()
+    })
 }

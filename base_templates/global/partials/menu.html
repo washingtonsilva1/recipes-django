@@ -1,0 +1,51 @@
+<div class="header-object">
+    <a id="acc-management" href="#" aria-expanded="false" aria-label="Show menu">
+        <i class="fa-solid fa-user"></i>
+    </a>
+    <div id="acc-management-container">
+        <div id="acc-management-container-pol">
+            <svg height="24" width="32">
+                <polygon points="20,10 10,20 30,20" style="stroke-width:1" />
+            </svg>
+        </div>
+        <ul class="acc-management-options">
+            {% if user.is_authenticated %}
+            <li class="acc-option">
+                <a href="{% url 'authors:dashboard' %}">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span class="acc-option-text">Your panel</span>
+                </a>
+            </li>
+            <li class="acc-option">
+                <a href="{% url 'authors:recipe_create' %}">
+                    <i class="fa-solid fa-plus"></i>                
+                    <span class="acc-option-text">New recipe</span>
+                </a>
+            </li>
+            <li class="acc-option">
+                <form id="user-management-logout" action="{% url "authors:logout" %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{request.user.username}}">
+                </form>
+                <a class="user-management-logout" href="#">                    
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="acc-option-text">Logout</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="acc-option">
+                <a href="{% url 'authors:login' %}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span class="acc-option-text">Login</span>
+                </a>
+            </li>
+            <li class="acc-option">
+                <a href="{% url 'authors:register' %}">
+                    <i class="fa-solid fa-pen"></i>
+                    <span class="acc-option-text">Register</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

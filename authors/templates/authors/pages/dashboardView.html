@@ -8,7 +8,10 @@
     <div class="d-block center m-y">
         <h1>Your recipes</h1>
         <div class="recipe-management">
-            <a href="{% url "authors:recipe_create" %}" class="btn-link btn-link-success"><i class="fa-solid fa-plus"></i> New recipe</a>
+            <a href="{% url "authors:recipe_create" %}" class="btn-link btn-link-success" aria-label="Create a new recipe">
+                <i class="fa-solid fa-plus"></i>
+                <span>New recipe</span>
+            </a>
         </div>
     </div>
     <div class="main-content main-content-list container">

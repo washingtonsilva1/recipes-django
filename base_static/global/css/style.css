@@ -425,13 +425,20 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     top: 0px;
     right: 0px;
     margin: 100px 40px 10px 0px;
+    max-width: 160px;
     padding: var(--spacing-gutter-sm);
-    background-color: var(--color-gray1);
-    border-top: 5px solid var(--color-white);
-    border-bottom: 5px solid var(--color-white);
+    background-color: var(--color-secondary-hover);
     border-radius: 5px;
     box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
     z-index: 999;
+}
+
+#acc-management-container-pol {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    fill: var(--color-secondary-hover);
+    margin-top: -17px;
 }
 
 #acc-management[aria-expanded="true"] + #acc-management-container {
@@ -441,8 +448,9 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
 .acc-management-options {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     list-style: none;
+    word-wrap: break-word;
 }
 
 .input-link {
@@ -465,9 +473,13 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     font-size: 18px;
 }
 
+.acc-option i {
+    color: var(--color-white);
+}
+
 .acc-option-text {
     font-family: var(--font-headings);
-    margin-left: var(--spacing-gutter-sm);
+    color: var(--color-white);
 }
 
 .recipe-management {
@@ -501,7 +513,7 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     color: var(--color-white);
     /* font-weight: bold; */
     text-decoration: none;
-    padding: 5px;
+    padding: 5px 10px;
     background-color: rgb(123, 170, 240);
     border-radius: 5px;
 }
