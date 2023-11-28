@@ -448,9 +448,10 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
 .acc-management-options {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: flex-start;
     list-style: none;
     word-wrap: break-word;
+    gap: var(--spacing-gutter-sm);
 }
 
 .input-link {
@@ -460,9 +461,9 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     border: none;
 }
 
-.acc-management-options .acc-option:not(:last-child) {
+/* .acc-management-options .acc-option:not(:last-child) {
     margin-bottom: var(--spacing-gutter-sm);
-}
+} */
 
 .acc-management-options .acc-option a {
     color: var(--color-dark-text);
