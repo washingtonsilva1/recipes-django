@@ -4,7 +4,8 @@ from django.urls import resolve, reverse
 
 
 class LogoutViewTest(FormTestBase):
-    def login_user(self):
+    def setUp(self):
+        super().setUp()
         self.create_user()
         self.client.login(
             username=self.form_data['username'],
@@ -15,31 +16,24 @@ class LogoutViewTest(FormTestBase):
         view = resolve(reverse('authors:logout'))
         self.assertIs(view.func, views.logout_view)
 
-    def test_logout_view_redirect_to_login_when_not_logged(self):
-        response = self.client.get(
-            reverse('authors:logout'),
-            follow=True)
-        self.assertEqual(reverse('authors:login'),
-                         response.request.get('PATH_INFO'))
-
     def test_logout_view_is_logging_out_user(self):
-        self.login_user()
         response = self.client.post(
             reverse('authors:logout'),
-            data={
-                'username': self.form_data['username'],
-            },
-            follow=True)
+            data={'username': self.form_data['username']},
+            follow=True
+        )
         content = response.content.decode('utf-8')
         self.assertIn('You have sucessfully logged out', content)
 
-    def test_logout_view_redirect_to_login_when_data_does_not_match(self):
-        self.login_user()
+    # flake8:noqa
+    def test_logout_view_redirects_logged_user_to_dashboard_if_there_is_no_post_request(self):
+        response = self.client.get(reverse('authors:logout'), follow=True)
+        self.assertRedirects(response, reverse('authors:dashboard'))
+
+    def test_logout_view_redirects_logged_user_to_dashboard_if_data_does_not_match(self):
         response = self.client.post(
             reverse('authors:logout'),
-            data={
-                'username': f'{self.form_data["username"]}1',
-            },
-            follow=True)
-        self.assertEqual(reverse('authors:dashboard'),
-                         response.request.get('PATH_INFO'))
+            data={'username': f'{self.form_data["username"]}1'},
+            follow=True
+        )
+        self.assertRedirects(response, reverse('authors:dashboard'))
