@@ -27,7 +27,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="username" value="{{request.user.username}}">
                 </form>
-                <a class="user-management-logout" href="#">                    
+                <a class="user-management-logout" href="{% url "authors:logout" %}">                    
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span class="acc-option-text">Logout</span>
                 </a>
