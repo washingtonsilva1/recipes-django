@@ -1,0 +1,12 @@
+{% extends "global/base.html" %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+    <div class="main-content container center">
+        <h1>{{profile.user.username}}</h1>
+        {% if profile.bio %}
+            <p>{{profile.bio}}</p>
+        {% else %}
+            <p>This user doesn't have any information.</p>
+        {% endif %}
+    </div>
+{% endblock content %}
