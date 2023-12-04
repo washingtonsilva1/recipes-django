@@ -33,7 +33,7 @@ class Recipe(models.Model):
                                  on_delete=models.SET_NULL, null=True,
                                  blank=True, default=None)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(to=Tag, blank=True)
+    tags = models.ManyToManyField(to=Tag, blank=True, default='')
 
     def __str__(self):
         return self.title
