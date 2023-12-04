@@ -2,8 +2,9 @@ var isExpanded = String(document.getElementById('acc-management').getAttribute('
 
 window.onload = function(ev) {
     document.getElementById('acc-management').addEventListener('click', function(ev) {
+        ev.preventDefault();
         isExpanded = !isExpanded;
-        document.getElementById('acc-management').setAttribute('aria-expanded', isExpanded) 
+        document.getElementById('acc-management').setAttribute('aria-expanded', isExpanded);
     });
     document.querySelectorAll('.delete_recipe_form').forEach(function(e) {
         e.addEventListener('submit', function(ev) {
