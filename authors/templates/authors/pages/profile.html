@@ -1,12 +1,21 @@
 {% extends "global/base.html" %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
+    {% include "global/partials/messages.html" %}
     <div class="main-content container center">
+        {% if profile.user.pk == request.user.pk %}
+        <div class="user-management-profile">
+            <a href="{% url "authors:profile_update" profile.pk %}" class="btn-link btn-link-primary">
+                <i class="fa-solid fa-pen"></i>
+                <span>Update profile</span>
+            </a>
+        </div>
+        {% endif %}
         <h1>{{profile.user.username}}</h1>
         {% if profile.bio %}
             <p>{{profile.bio}}</p>
         {% else %}
-            <p>This user doesn't have any information.</p>
+            <p>This user doesn't have any information yet.</p>
         {% endif %}
     </div>
 {% endblock content %}

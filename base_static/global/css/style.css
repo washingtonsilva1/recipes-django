@@ -502,6 +502,12 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     border: 1px solid var(--border-success);
 }
 
+.btn-link-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: 1px solid var(--border-primary);
+}
+
 .tags-list {
     display: flex;
     flex-wrap: wrap;
@@ -517,6 +523,12 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     padding: 5px 10px;
     background-color: rgb(123, 170, 240);
     border-radius: 5px;
+}
+
+.user-management-profile {
+    display: flex;
+    margin: var(--spacing-gutter-sm) 0;
+    justify-content: flex-end;
 }
 
 /* Generic */

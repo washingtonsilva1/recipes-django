@@ -1,7 +1,11 @@
 from authors.models import Profile
 
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.contrib import messages
 
 
 class ProfileView(TemplateView):
@@ -22,3 +26,34 @@ class ProfileView(TemplateView):
             'search_bar': False,
         })
         return self.render_to_response(ctx)
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    context_object_name = 'profile'
+    fields = ['bio']
+    template_name = 'authors/pages/profile_update.html'
+    login_url = reverse_lazy('authors:login')
+
+    def post(self, request, *args, **kwargs):
+        messages.success(self.request, 'Your profile has been updated!')
+        return super().post(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update({
+            'search_bar': False,
+            'title': f'{ctx["profile"].username} | ',
+        })
+        return ctx
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.select_related('user')
+        qs = qs.filter(
+            user=self.request.user
+        )
+        return qs
+
+    def get_success_url(self):
+        return reverse_lazy('authors:profile', args=[self.get_object().pk])
