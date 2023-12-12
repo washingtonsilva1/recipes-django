@@ -112,24 +112,6 @@ class BaseRecipeForm(forms.ModelForm):
             )
         return servings_unit
 
-    def clean_title(self):
-        title = self.cleaned_data.get('title', '')
-        if len(title) < 8:
-            raise ValidationError(
-                message='Your title must have at least 8 characters.',
-                code='invalid'
-            )
-        recipe_from_db = Recipe.objects.filter(
-            title__iexact=title,
-        ).first()
-        if recipe_from_db:
-            raise ValidationError(
-                message='A recipe with this title already exists, ' +
-                'try another one.',
-                code='invalid'
-            )
-        return title
-
     def clean_description(self):
         description = self.cleaned_data.get('description', '')
         if len(description) < 10:
