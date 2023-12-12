@@ -1,5 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
+from django.utils.translation import gettext as _
+
 from authors import views
 from recipes.tests.test_recipe_base import RecipeMixin
 
@@ -25,4 +27,4 @@ class RegisterViewTest(TestCase, RecipeMixin):
         )
         response = self.client.get(reverse('authors:register'), follow=True)
         content = response.content.decode('utf-8')
-        self.assertIn('Your recipes', content)
+        self.assertIn(_('Your recipes'), content)

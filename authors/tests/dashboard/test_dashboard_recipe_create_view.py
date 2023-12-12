@@ -13,7 +13,7 @@ class DashboardRecipeCreateViewTest(DashboardTestBase):
     def test_recipe_create_view_is_rendering_correct_template(self):
         response = self.client.get(reverse('authors:recipe_create'))
         self.assertTemplateUsed(response,
-                                'authors/pages/edit_recipeView.html')
+                                'authors/pages/create_recipeView.html')
 
     def test_recipe_create_view_redirects_if_not_logged(self):
         self.client.logout()

@@ -2,6 +2,7 @@ import pytest
 from parameterized import parameterized
 from .test_dashboard_base import DashboardTestBase
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 
 @pytest.mark.slow
@@ -11,9 +12,9 @@ class DashboardRecipeCreateFormTest(DashboardTestBase):
             'title': 'Recipe Title',
             'description': 'Recipe Description',
             'preparation_time': '10',
-            'preparation_time_unit': 'Minuto',
+            'preparation_time_unit': 'Minute',
             'servings': '1',
-            'servings_unit': 'Porções',
+            'servings_unit': 'Servings',
             'preparation_steps': 'Faça isso e depois fala aquilo',
         }
         super().setUp()

@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from recipes.tests.test_recipe_base import RecipeMixin
 
 
@@ -27,7 +28,7 @@ class ProfileViewTest(TestCase, RecipeMixin):
                     args=[self.user.profile.pk])
         )
         content = response.content.decode('utf-8')
-        self.assertIn('Update profile', content)
+        self.assertIn(_('Update profile'), content)
 
         # Case 2
         # Logged user and profile__user are different
@@ -37,7 +38,7 @@ class ProfileViewTest(TestCase, RecipeMixin):
                     args=[self.user.profile.pk])
         )
         content = response.content.decode('utf-8')
-        self.assertNotIn('Update profile', content)
+        self.assertNotIn(_('Update profile'), content)
 
     def test_profile_bio_shows_default_information_if_empty(self):
         response = self.client.get(

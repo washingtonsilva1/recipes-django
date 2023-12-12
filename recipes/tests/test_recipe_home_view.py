@@ -1,4 +1,5 @@
 from django.urls import reverse, resolve
+from django.utils.translation import gettext as _
 from recipes import views
 
 from .test_recipe_base import RecipeTestBase
@@ -19,7 +20,10 @@ class RecipeHomeViewTest(RecipeTestBase):
 
     def test_recipe_home_view_returns_not_found_if_there_are_no_recipes(self):
         response = self.client.get(reverse('recipes:home'))
-        self.assertIn('There are no recipes', response.content.decode('utf-8'))
+        self.assertIn(
+            _('No recipes were found'),
+            response.content.decode('utf-8')
+        )
 
     def test_recipe_home_view_template_loads_recipes(self):
         needed_title = 'A New Recipe'
@@ -32,4 +36,4 @@ class RecipeHomeViewTest(RecipeTestBase):
         self.make_recipe(is_published=False)
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
-        self.assertIn('There are no recipes', content)
+        self.assertIn(_('No recipes were found'), content)

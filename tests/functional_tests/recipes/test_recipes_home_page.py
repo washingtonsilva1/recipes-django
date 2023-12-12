@@ -1,4 +1,5 @@
 import pytest
+from django.utils.translation import gettext as _
 from unittest.mock import patch
 from .test_recipes_base import FunctionalRecipesTestBase
 from selenium.webdriver.common.by import By
@@ -11,7 +12,7 @@ class RecipeHomePageFunctionalTest(FunctionalRecipesTestBase):
     def test_recipe_home_page_when_there_are_no_recipes(self):
         self.chrome.get(self.live_server_url)
         body = self.chrome.find_element(By.TAG_NAME, 'body')
-        self.assertIn('There are no recipes...', body.text)
+        self.assertIn(_('No recipes were found'), body.text)
 
     @patch('recipes.views.RECIPES_PER_PAGE', new=3)
     def test_recipe_home_search_input_get_correct_recipe(self):
