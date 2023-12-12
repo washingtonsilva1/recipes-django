@@ -84,6 +84,7 @@ class DashboardRecipeEdit(DashboardRecipeView):
             messages.success(self.request, 'Your recipe has been updated!')
             return redirect('authors:dashboard')
         return self.get_page(
+            template='authors/pages/edit_recipeView.html',
             form=form,
             recipe=recipe,
             search_bar=False,
@@ -122,6 +123,7 @@ class DashboardRecipeCreate(DashboardRecipeView):
             messages.success(self.request, 'Your recipe has been created!')
             return redirect('authors:dashboard')
         return self.get_page(
+            template='authors/pages/create_recipeView.html',
             form=form,
             title='Create a recipe | ',
             search_bar=False
