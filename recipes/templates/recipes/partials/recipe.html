@@ -36,7 +36,7 @@
             </span>
         {% endif %}
         <span class="recipe-author-item">
-            <i class="fas fa-calendar-alt"></i> {{recipe.created_at|date:"d/m/Y à\s H:i:s"}}
+            <i class="fas fa-calendar-alt"></i> {{recipe.created_at|date:"d/m/Y H:i:s"}}
         </span>
         {% if recipe.category is not None %}
         <span class="recipe-author-item">
@@ -56,14 +56,20 @@
                 <i class="fas fa-stopwatch"></i>
                 <span>{% translate 'Preparation' %}</span>                       
             </h3>
-            <div class="recipe-meta-text">{{recipe.preparation_time}} {{recipe.preparation_time_unit}}</div>
+            <div class="recipe-meta-text">
+                <span>{{recipe.preparation_time}}</span>
+                <span>{% translate recipe.preparation_time_unit %}</span>
+            </div>
         </div>
         <div class="recipe-meta recipe-servings">
             <h3 class="recipe-meta-title">
                 <i class="fas fa-pizza-slice"></i>
                 <span>{% translate 'Servings' %}</span>
             </h3>
-            <div class="recipe-meta-text">{{recipe.servings}} {{recipe.servings_unit}}</div>
+            <div class="recipe-meta-text">
+                <span>{{recipe.servings}}</span>
+                <span>{% translate recipe.servings_unit %}</span>
+            </div>
         </div>
     </div>
     {% if is_detail_view is not True %}

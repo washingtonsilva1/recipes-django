@@ -1,16 +1,17 @@
 {% extends "global/base.html" %}
+{% load i18n %}
 {% block title %}Dashboard | {% endblock title %}
 {% block content %}
     {% include "global/partials/messages.html" %}
     <div class="d-block m-y m-x text-right">
-        <h2>Welcome to your dashboard, {{user}}!</h2>
+        <h2>{% translate "Welcome to your dashboard" %}, {{user}}!</h2>
     </div>
     <div class="d-block center m-y">
-        <h1>Your recipes</h1>
+        <h1>{% translate "Your recipes" %}</h1>
         <div class="recipe-management">
             <a href="{% url "authors:recipe_create" %}" class="btn-link btn-link-success" aria-label="Create a new recipe">
                 <i class="fa-solid fa-plus"></i>
-                <span>New recipe</span>
+                <span>{% translate "New recipe" %}</span>
             </a>
         </div>
     </div>
@@ -19,6 +20,7 @@
             {% include 'authors/partials/edit_recipe.html' %}
         {% empty %}
             <div class="d-block center m-y">
+                <h2>{% translate "You don't have any unpublished recipe" %}.</h2>
                 <h2>You don't have any unpublished recipe.</h2>
             </div>
         {% endfor %}

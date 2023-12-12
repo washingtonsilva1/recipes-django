@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-11 18:59-0300\n"
+"POT-Creation-Date: 2023-12-12 01:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,47 +18,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\authors\forms\edit_recipe_form.py:29
+#: .\authors\forms\base_recipe_form.py:29
+#: .\authors\tests\dashboard\test_dashboard_recipe_edit_form.py:15
 msgid "Hour"
 msgstr "Hora"
 
-#: .\authors\forms\edit_recipe_form.py:30
+#: .\authors\forms\base_recipe_form.py:30
 msgid "Minute"
 msgstr "Minuto"
 
-#: .\authors\forms\edit_recipe_form.py:35
+#: .\authors\forms\base_recipe_form.py:35
+#: .\authors\tests\dashboard\test_dashboard_recipe_edit_form.py:17
 msgid "People"
 msgstr "Pessoa"
 
-#: .\authors\forms\edit_recipe_form.py:36
+#: .\authors\forms\base_recipe_form.py:36
 msgid "Slice"
 msgstr "Pedaço"
 
-#: .\authors\forms\edit_recipe_form.py:37
+#: .\authors\forms\base_recipe_form.py:37
 #: .\authors\templates\authors\partials\edit_recipe.html:37
-#: .\recipes\models.py:31 .\recipes\templates\recipes\partials\recipe.html:64
+#: .\recipes\models.py:31 .\recipes\templates\recipes\partials\recipe.html:67
 msgid "Servings"
 msgstr "Porção"
 
 #: .\authors\forms\login_form.py:7 .\authors\forms\register_form.py:45
+#: .\authors\tests\test_register_form.py:40
 msgid "Username"
 msgstr "Nome de usuário"
 
 #: .\authors\forms\login_form.py:19 .\authors\forms\register_form.py:65
+#: .\authors\tests\test_register_form.py:41
 msgid "Password"
 msgstr "Senha"
 
-#: .\authors\forms\register_form.py:10
+#: .\authors\forms\register_form.py:10 .\authors\tests\test_register_form.py:44
 msgid "First name"
 msgstr "Nome"
 
-#: .\authors\forms\register_form.py:21
+#: .\authors\forms\register_form.py:21 .\authors\tests\test_register_form.py:45
 msgid "Last name"
 msgstr "Sobrenome"
 
-#: .\authors\forms\register_form.py:80
+#: .\authors\forms\register_form.py:80 .\authors\tests\test_register_form.py:42
 msgid "Confirm password"
 msgstr "Confirme a senha"
+
+#: .\authors\templates\authors\pages\dashboardView.html:7
+msgid "Welcome to your dashboard"
+msgstr "Bem-vindo ao seu painel"
+
+#: .\authors\templates\authors\pages\dashboardView.html:10
+msgid "Your recipes"
+msgstr "Suas receitas"
+
+#: .\authors\templates\authors\pages\dashboardView.html:14
+#: .\base_templates\global\partials\menu.html:24
+msgid "New recipe"
+msgstr "Nova receita"
+
+#: .\authors\templates\authors\pages\dashboardView.html:23
+msgid "You don't have any unpublished recipe"
+msgstr "Você não tem nenhuma receita não publicada"
 
 #: .\authors\templates\authors\partials\edit_recipe.html:30
 #: .\recipes\templates\recipes\partials\recipe.html:57
@@ -76,10 +97,6 @@ msgstr "Deletar"
 #: .\base_templates\global\partials\menu.html:18
 msgid "My panel"
 msgstr "Meu painel"
-
-#: .\base_templates\global\partials\menu.html:24
-msgid "New recipe"
-msgstr "Nova receita"
 
 #: .\base_templates\global\partials\menu.html:34
 msgid "Logout"
@@ -121,11 +138,16 @@ msgstr "Modo de preparo"
 msgid "Cover"
 msgstr "Capa"
 
-#: .\recipes\templates\recipes\partials\recipe.html:73
+#: .\recipes\templates\recipes\pages\home.html:11
+#: .\recipes\templates\recipes\pages\search.html:10
+msgid "No recipes were found"
+msgstr "Nenhuma receita foi encontrada"
+
+#: .\recipes\templates\recipes\partials\recipe.html:79
 msgid "read more"
 msgstr "ver mais"
 
-#: .\recipes\views.py:74
+#: .\recipes\tests\test_recipe_category_view.py:32 .\recipes\views.py:74
 msgid "Category"
 msgstr "Categoria"
 
