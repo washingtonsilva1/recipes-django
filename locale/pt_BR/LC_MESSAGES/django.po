@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-11 18:59-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\authors\forms\edit_recipe_form.py:29
+msgid "Hour"
+msgstr "Hora"
+
+#: .\authors\forms\edit_recipe_form.py:30
+msgid "Minute"
+msgstr "Minuto"
+
+#: .\authors\forms\edit_recipe_form.py:35
+msgid "People"
+msgstr "Pessoa"
+
+#: .\authors\forms\edit_recipe_form.py:36
+msgid "Slice"
+msgstr "Pedaço"
+
+#: .\authors\forms\edit_recipe_form.py:37
+#: .\authors\templates\authors\partials\edit_recipe.html:37
+#: .\recipes\models.py:31 .\recipes\templates\recipes\partials\recipe.html:64
+msgid "Servings"
+msgstr "Porção"
+
+#: .\authors\forms\login_form.py:7 .\authors\forms\register_form.py:45
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: .\authors\forms\login_form.py:19 .\authors\forms\register_form.py:65
+msgid "Password"
+msgstr "Senha"
+
+#: .\authors\forms\register_form.py:10
+msgid "First name"
+msgstr "Nome"
+
+#: .\authors\forms\register_form.py:21
+msgid "Last name"
+msgstr "Sobrenome"
+
+#: .\authors\forms\register_form.py:80
+msgid "Confirm password"
+msgstr "Confirme a senha"
+
+#: .\authors\templates\authors\partials\edit_recipe.html:30
+#: .\recipes\templates\recipes\partials\recipe.html:57
+msgid "Preparation"
+msgstr "Preparo"
+
+#: .\authors\templates\authors\partials\edit_recipe.html:45
+msgid "Edit"
+msgstr "Editar"
+
+#: .\authors\templates\authors\partials\edit_recipe.html:54
+msgid "Delete"
+msgstr "Deletar"
+
+#: .\base_templates\global\partials\menu.html:18
+msgid "My panel"
+msgstr "Meu painel"
+
+#: .\base_templates\global\partials\menu.html:24
+msgid "New recipe"
+msgstr "Nova receita"
+
+#: .\base_templates\global\partials\menu.html:34
+msgid "Logout"
+msgstr "Logout"
+
+#: .\base_templates\global\partials\menu.html:41
+msgid "Login"
+msgstr "Login"
+
+#: .\base_templates\global\partials\menu.html:47
+msgid "Register"
+msgstr "Registre-se"
+
+#: .\recipes\models.py:19
+msgid "Title"
+msgstr "Título"
+
+#: .\recipes\models.py:22
+msgid "Description"
+msgstr "Descrição"
+
+#: .\recipes\models.py:25
+msgid "Preparation time"
+msgstr "Tempo de preparo"
+
+#: .\recipes\models.py:29
+msgid "Preparation time unit"
+msgstr "Unidade tempo de preparo"
+
+#: .\recipes\models.py:34
+msgid "Servings unit"
+msgstr "Unidade porção"
+
+#: .\recipes\models.py:36
+msgid "Preparation steps"
+msgstr "Modo de preparo"
+
+#: .\recipes\models.py:49
+msgid "Cover"
+msgstr "Capa"
+
+#: .\recipes\templates\recipes\partials\recipe.html:73
+msgid "read more"
+msgstr "ver mais"
+
+#: .\recipes\views.py:74
+msgid "Category"
+msgstr "Categoria"
+
+#~ msgid "Serving"
+#~ msgstr "Porção"

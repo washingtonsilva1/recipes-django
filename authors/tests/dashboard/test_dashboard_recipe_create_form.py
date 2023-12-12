@@ -13,7 +13,7 @@ class DashboardRecipeCreateFormTest(DashboardTestBase):
             'preparation_time': '10',
             'preparation_time_unit': 'Minuto',
             'servings': '1',
-            'servings_unit': 'Porção',
+            'servings_unit': 'Porções',
             'preparation_steps': 'Faça isso e depois fala aquilo',
         }
         super().setUp()

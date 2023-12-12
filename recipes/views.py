@@ -9,6 +9,8 @@ from django.http import Http404, JsonResponse
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.views.generic import ListView, DetailView
+from django.utils.translation import get_language
+from django.utils.translation import gettext as _
 
 RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE', 6))
 PAGES_TO_DISPLAY = int(os.environ.get('PAGES_TO_DISPLAY', 4))
@@ -40,7 +42,8 @@ class RecipesListView(ListView):
         ctx.update({
             'recipes': pagination['page'],
             'pagination_range': pagination['page_range'],
-            'search_bar': True
+            'search_bar': True,
+            'translation': get_language(),
         })
         return ctx
 
@@ -68,8 +71,10 @@ class RecipesCategoryView(RecipesListView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
+        category_translation = _('Category')
         ctx.update({
-            'title': f'{ctx.get("recipes")[0].category.name} - Category | ',
+            'title': f'{ctx.get("recipes")[0].category.name} - '
+            f'{category_translation} | ',
         })
         return ctx
 
@@ -118,6 +123,7 @@ class RecipeDetailView(DetailView):
             'is_detail_view': True,
             'title': f'{ctx.get("recipe").title} | ',
             'search_bar': False,
+            'translation': get_language()
         })
         return ctx
 

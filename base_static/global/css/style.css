@@ -425,7 +425,7 @@ span.pag-item[disabled], span.pag-navigator[disabled] {
     top: 0px;
     right: 0px;
     margin: 100px 40px 10px 0px;
-    max-width: 160px;
+    max-width: 180px;
     padding: var(--spacing-gutter-sm);
     background-color: var(--color-secondary-hover);
     border-radius: 5px;

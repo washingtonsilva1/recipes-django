@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.http import Http404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.utils.translation import get_language
 
 
 def login_view(req):
@@ -16,6 +17,7 @@ def login_view(req):
         'form': form,
         'form_action': reverse('authors:login_create'),
         'search_bar': False,
+        'translation': get_language(),
     })
 
 

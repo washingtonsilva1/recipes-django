@@ -2,11 +2,12 @@ from django import forms
 from utils.django_form import strong_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 
 class RegisterForm(forms.ModelForm):
     first_name = forms.CharField(
-        label='First name',
+        label=_('First name'),
         error_messages={
             'required': 'Type your first name.',
         },
@@ -17,7 +18,7 @@ class RegisterForm(forms.ModelForm):
         ),
     )
     last_name = forms.CharField(
-        label='Last name',
+        label=_('Last name'),
         error_messages={
             'required': 'Type your last name.',
         },
@@ -41,7 +42,7 @@ class RegisterForm(forms.ModelForm):
         )
     )
     username = forms.CharField(
-        label='Username',
+        label=_('Username'),
         error_messages={
             'required': 'Type a valid username.',
             'min_length': 'Your username must have at least 8 characters.',
@@ -61,7 +62,7 @@ class RegisterForm(forms.ModelForm):
         ),
     )
     password = forms.CharField(
-        label='Password',
+        label=_('Password'),
         error_messages={
             'required': 'Type a valid password.'
         },
@@ -76,7 +77,7 @@ class RegisterForm(forms.ModelForm):
         validators=[strong_password]
     )
     password2 = forms.CharField(
-        label='Confirm password',
+        label=_('Confirm password'),
         error_messages={
             'required': 'Type your password again.'
         },

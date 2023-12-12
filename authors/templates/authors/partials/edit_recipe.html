@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="recipe recipe-list-item">
     <div class="recipe-cover">
             {% if recipe.cover %}
@@ -25,13 +26,15 @@
     <div class="recipe-meta-container">
         <div class="recipe-meta recipe-preparation">
             <h3 class="recipe-meta-title">
-                <i class="fas fa-stopwatch"></i> Preparo                        
+                <i class="fas fa-stopwatch"></i>
+                <span>{% translate "Preparation" %}</span>
             </h3>
             <div class="recipe-meta-text">{{recipe.preparation_time}} {{recipe.preparation_time_unit}}</div>
         </div>
         <div class="recipe-meta recipe-servings">
             <h3 class="recipe-meta-title">
-                <i class="fas fa-pizza-slice"></i> Porções
+                <i class="fas fa-pizza-slice"></i>
+                <span>{% translate "Servings" %}</span>
             </h3>
             <div class="recipe-meta-text">{{recipe.servings}} {{recipe.servings_unit}}</div>
         </div>
@@ -39,7 +42,7 @@
     <div class="recipe-footer">
         <a href="{% url 'authors:recipe_edit' recipe.id %}" class="recipe-read-more button button-dark button-full-width">
             <i class="fa-solid fa-pen"></i>
-            <span>Edit</span>
+            <span>{% translate 'Edit' %}</span>
         </a>
     </div>
     <div class="recipe-footer">
@@ -48,7 +51,7 @@
             <input type="hidden" name="recipe_id" value="{{recipe.id}}">
             <button class="input-delete button-red button-full-width" type="submit">
                 <i class="fa-solid fa-trash"></i>
-                <span>Delete</span>
+                <span>{% translate 'Delete' %}</span>
             </button>
         </form>
     </div>

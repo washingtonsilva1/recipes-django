@@ -5,6 +5,7 @@ from authors.forms.edit_recipe_form import RecipeEditForm
 from authors.forms.create_recipe_form import RecipeCreateForm
 from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
+from django.utils.translation import get_language
 from django.utils.text import slugify
 from django.contrib import messages
 from django.utils.decorators import method_decorator
@@ -26,6 +27,7 @@ def dashboard_view(req):
         'recipes': pagination['page'],
         'pagination_range': pagination['page_range'],
         'search_bar': False,
+        'translation': get_language(),
     })
 
 
@@ -42,7 +44,10 @@ class DashboardRecipeView(View):
         return render(
             self.request,
             'authors/pages/edit_recipeView.html',
-            kwargs
+            {
+                'translation': get_language(),
+                **kwargs,
+            }
         )
 
 

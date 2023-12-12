@@ -1,9 +1,10 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        label='Username',
+        label=_('Username'),
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Type your username',
@@ -15,7 +16,7 @@ class LoginForm(forms.Form):
 
     )
     password = forms.CharField(
-        label='Password',
+        label=_('Password'),
         widget=forms.PasswordInput(
             attrs={
                 'placeholder': 'Type your password'

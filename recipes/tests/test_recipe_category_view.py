@@ -1,6 +1,6 @@
 from django.urls import reverse, resolve
 from recipes import views
-
+from django.utils.translation import gettext as _
 from .test_recipe_base import RecipeTestBase
 
 
@@ -29,6 +29,7 @@ class RecipeCategoryViewTest(RecipeTestBase):
 
     def test_recipe_category_view_title_displays_category_title(self):
         category_needed = 'A new category'
+        category_translate = _('Category')
         recipe = self.make_recipe(
             category={'category_name': category_needed}
         )
@@ -36,6 +37,6 @@ class RecipeCategoryViewTest(RecipeTestBase):
             reverse('recipes:category', args=(recipe.category.id,))
         )
         self.assertEqual(
-            f'{category_needed} - Category | ',
+            f'{category_needed} - {category_translate} | ',
             response.context['title']
         )

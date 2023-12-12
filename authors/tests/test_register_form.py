@@ -3,6 +3,7 @@ from unittest import TestCase
 from .test_form_base import FormTestBase
 from django.urls import reverse
 from authors.forms import RegisterForm
+from django.utils.translation import gettext as _
 
 
 class RegisterFormUnitTest(TestCase):
@@ -36,12 +37,12 @@ class RegisterFormUnitTest(TestCase):
         self.assertEqual(current, help_text)
 
     @parameterized.expand([
-        ('username', 'Username'),
-        ('password', 'Password'),
-        ('password2', 'Confirm password'),
+        ('username', _('Username')),
+        ('password', _('Password')),
+        ('password2', _('Confirm password')),
         ('email', 'Email'),
-        ('first_name', 'First name'),
-        ('last_name', 'Last name'),
+        ('first_name', _('First name')),
+        ('last_name', _('Last name')),
     ])
     def test_fields_label(self, field, label):
         form = RegisterForm()

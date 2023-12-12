@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import get_language
 
 from django.contrib import messages
 
@@ -24,6 +25,7 @@ class ProfileView(TemplateView):
             'title': f'{profile.user.username} | ',
             'profile': profile,
             'search_bar': False,
+            'translation': get_language(),
         })
         return self.render_to_response(ctx)
 
@@ -44,6 +46,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         ctx.update({
             'search_bar': False,
             'title': f'{ctx["profile"].username} | ',
+            'translation': get_language(),
         })
         return ctx
 

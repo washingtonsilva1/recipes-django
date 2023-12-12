@@ -17,7 +17,7 @@ class RecipeMixin:
     def make_recipe(self, title='Recipe\'s Title',
                     description='Recipe\'s Description',
                     slug='recipe-slug', preparation_time=1,
-                    preparation_time_unit='Minutos', servings=1,
+                    preparation_time_unit='Minuto', servings=1,
                     servings_unit='Pessoa',
                     preparation_steps='How to do the recipe, step by step...',
                     preparation_steps_is_html=False, is_published=True,

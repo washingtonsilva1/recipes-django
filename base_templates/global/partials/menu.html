@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="header-object">
     <a id="acc-management" href="#" aria-expanded="false" aria-label="Show menu">
         <i class="fa-solid fa-user"></i>
@@ -13,13 +15,13 @@
             <li class="acc-option">
                 <a href="{% url 'authors:dashboard' %}">
                     <i class="fa-solid fa-sliders"></i>
-                    <span class="acc-option-text">Your panel</span>
+                    <span class="acc-option-text">{% translate 'My panel' %}</span>
                 </a>
             </li>
             <li class="acc-option">
                 <a href="{% url 'authors:recipe_create' %}">
                     <i class="fa-solid fa-plus"></i>                
-                    <span class="acc-option-text">New recipe</span>
+                    <span class="acc-option-text">{% translate 'New recipe' %}</span>
                 </a>
             </li>
             <li class="acc-option">
@@ -29,20 +31,20 @@
                 </form>
                 <a class="user-management-logout" href="{% url "authors:logout" %}">                    
                     <i class="fa-solid fa-right-from-bracket"></i>
-                    <span class="acc-option-text">Logout</span>
+                    <span class="acc-option-text">{% translate 'Logout' %}</span>
                 </a>
             </li>
             {% else %}
             <li class="acc-option">
                 <a href="{% url 'authors:login' %}">
                     <i class="fa-solid fa-right-to-bracket"></i>
-                    <span class="acc-option-text">Login</span>
+                    <span class="acc-option-text">{% translate 'Login' %}</span>
                 </a>
             </li>
             <li class="acc-option">
                 <a href="{% url 'authors:register' %}">
                     <i class="fa-solid fa-pen"></i>
-                    <span class="acc-option-text">Register</span>
+                    <span class="acc-option-text">{% translate 'Register' %}</span>
                 </a>
             </li>
             {% endif %}

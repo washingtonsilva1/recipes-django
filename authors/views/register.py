@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import Http404
+from django.utils.translation import get_language
 
 
 def register_view(req):
@@ -18,6 +19,7 @@ def register_view(req):
             'form': form,
             'form_action': reverse('authors:register_create'),
             'search_bar': False,
+            'translation': get_language(),
         }
     )
 
