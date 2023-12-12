@@ -40,10 +40,10 @@ class DashboardRecipeView(View):
             is_published=False
         )
 
-    def get_page(self, **kwargs):
+    def get_page(self, template, **kwargs):
         return render(
             self.request,
-            'authors/pages/edit_recipeView.html',
+            template,
             {
                 'translation': get_language(),
                 **kwargs,
@@ -60,6 +60,7 @@ class DashboardRecipeEdit(DashboardRecipeView):
         recipe = self.get_recipe(kwargs.get('id'))
         form = RecipeEditForm(instance=recipe)
         return self.get_page(
+            template='authors/pages/edit_recipeView.html',
             form=form,
             recipe=recipe,
             search_bar=False,
@@ -101,6 +102,7 @@ class DashboardRecipeCreate(DashboardRecipeView):
             files=self.request.FILES or None
         )
         return self.get_page(
+            template='authors/pages/create_recipeView.html',
             form=form,
             title='Create a recipe | ',
             search_bar=False
