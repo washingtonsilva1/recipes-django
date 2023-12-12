@@ -45,7 +45,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         ctx = super().get_context_data(**kwargs)
         ctx.update({
             'search_bar': False,
-            'title': f'{ctx["profile"].username} | ',
+            'title': f'{ctx["profile"].user.username} | ',
             'translation': get_language(),
         })
         return ctx
