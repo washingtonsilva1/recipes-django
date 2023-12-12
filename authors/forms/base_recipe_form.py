@@ -26,15 +26,15 @@ class BaseRecipeForm(forms.ModelForm):
             ),
             'preparation_time_unit': forms.Select(
                 choices=[
-                    (_('Hour'), _('Hour')),
-                    (_('Minute'), _('Minute')),
+                    ('Hour', _('Hour')),
+                    ('Minute', _('Minute')),
                 ]
             ),
             'servings_unit': forms.Select(
                 choices=[
-                    (_('People'), _('People')),
-                    (_('Slice'), _('Slice')),
-                    (_('Servings'), _('Servings')),
+                    ('People', _('People')),
+                    ('Slice', _('Slice')),
+                    ('Servings', _('Servings')),
                 ]
             ),
             'preparation_steps': forms.Textarea(
