@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import Http404
 from django.utils.translation import get_language
+from django.utils.translation import gettext as _
 
 
 def register_view(req):
@@ -12,10 +13,12 @@ def register_view(req):
         return redirect('authors:dashboard')
     register_form_data = req.session.get('register_form_data', None)
     form = RegisterForm(register_form_data)
+    register_translate = _('Register')
     return render(
         req,
         'authors/pages/registerView.html',
         {
+            'title': f'{register_translate} | ',
             'form': form,
             'form_action': reverse('authors:register_create'),
             'search_bar': False,

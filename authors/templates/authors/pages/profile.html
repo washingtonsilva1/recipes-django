@@ -1,4 +1,5 @@
 {% extends "global/base.html" %}
+{% load i18n %}
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
     {% include "global/partials/messages.html" %}
@@ -7,7 +8,7 @@
         <div class="user-management-profile">
             <a href="{% url "authors:profile_update" profile.pk %}" class="btn-link btn-link-primary">
                 <i class="fa-solid fa-pen"></i>
-                <span>Update profile</span>
+                <span>{% translate "Update profile" %}</span>
             </a>
         </div>
         {% endif %}

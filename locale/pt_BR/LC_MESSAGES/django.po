@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-12 01:09-0300\n"
+"POT-Creation-Date: 2023-12-12 19:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,6 +64,10 @@ msgstr "Sobrenome"
 msgid "Confirm password"
 msgstr "Confirme a senha"
 
+#: .\authors\templates\authors\pages\create_recipeView.html:5
+msgid "Create recipe"
+msgstr "Nova receita"
+
 #: .\authors\templates\authors\pages\dashboardView.html:7
 msgid "Welcome to your dashboard"
 msgstr "Bem-vindo ao seu painel"
@@ -80,6 +84,19 @@ msgstr "Nova receita"
 #: .\authors\templates\authors\pages\dashboardView.html:23
 msgid "You don't have any unpublished recipe"
 msgstr "Você não tem nenhuma receita não publicada"
+
+#: .\authors\templates\authors\pages\edit_recipeView.html:5
+msgid "Edit recipe"
+msgstr "Atualizar receita"
+
+#: .\authors\templates\authors\pages\profile.html:10
+msgid "Update profile"
+msgstr "Atualizar perfil"
+
+#: .\authors\templates\authors\pages\registerView.html:6
+#: .\authors\views\register.py:16 .\base_templates\global\partials\menu.html:47
+msgid "Register"
+msgstr "Registre-se"
 
 #: .\authors\templates\authors\partials\edit_recipe.html:30
 #: .\recipes\templates\recipes\partials\recipe.html:57
@@ -105,10 +122,6 @@ msgstr "Logout"
 #: .\base_templates\global\partials\menu.html:41
 msgid "Login"
 msgstr "Login"
-
-#: .\base_templates\global\partials\menu.html:47
-msgid "Register"
-msgstr "Registre-se"
 
 #: .\recipes\models.py:19
 msgid "Title"
