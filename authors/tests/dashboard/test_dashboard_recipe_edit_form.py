@@ -2,7 +2,6 @@ import pytest
 from parameterized import parameterized
 from django.urls import reverse
 from .test_dashboard_base import DashboardTestBase
-from django.utils.translation import gettext as _
 
 
 @pytest.mark.slow
@@ -12,9 +11,9 @@ class DashboardRecipeEditFormTest(DashboardTestBase):
             'title': 'Recipe title',
             'description': 'Recipe descrption',
             'preparation_time': '1',
-            'preparation_time_unit': _('Hour'),
+            'preparation_time_unit': 'Hour',
             'servings': '1',
-            'servings_unit': _('People'),
+            'servings_unit': 'People',
             'preparation_steps': 'recipe preparation steps',
         }
         super().setUp()
@@ -107,4 +106,7 @@ class DashboardRecipeEditFormTest(DashboardTestBase):
         response = self.client.post(
             reverse('authors:recipe_edit', kwargs={'id': 1}),
             data=self.form_data, follow=True)
-        self.assertIn(title_needed, response.content.decode('utf-8'))
+        self.assertIn(
+            title_needed,
+            response.content.decode('utf-8')
+        )

@@ -47,3 +47,11 @@ class ProfileViewTest(TestCase, RecipeMixin):
         )
         content = response.content.decode('utf-8')
         self.assertIn('This user doesn\'t have any information yet.', content)
+
+    def test_profile_view_is_rendering_username_on_title(self):
+        response = self.client.get(
+            reverse('authors:profile',
+                    args=[self.user.profile.pk])
+        )
+        content = response.content.decode('utf-8')
+        self.assertIn(f'<title>{self.user.username} | Recipe', content)
