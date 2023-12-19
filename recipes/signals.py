@@ -2,7 +2,7 @@ import os
 from recipes.models import Recipe
 
 from django.dispatch import receiver
-from django.db.models.signals import pre_delete, pre_save
+from django.db.models.signals import pre_delete, pre_save, post_save
 
 
 def delete_cover(instance):
@@ -23,3 +23,10 @@ def recipe_updated_cover(sender, instance, *args, **kwargs):
     db_instance = Recipe.objects.filter(pk=instance.pk).first()
     if db_instance and db_instance.cover != instance.cover:
         delete_cover(db_instance)
+
+
+@receiver(post_save, sender=Recipe)
+def recipe_resize_cover(sender, instance, created, *args, **kwargs):
+    db_instance = Recipe.objects.filter(pk=instance.pk).first()
+    if db_instance.cover:
+        db_instance.resize_cover(840)
