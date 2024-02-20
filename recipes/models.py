@@ -9,8 +9,10 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 from django.utils.text import slugify
+from django.db.models import F, Value, QuerySet
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from django.db.models.functions import Concat
 
 
 # Create your models here.
@@ -21,7 +23,24 @@ class Category(models.Model):
         return self.name
 
 
+class RecipeManager(models.Manager):
+    def get_published(self) -> QuerySet:
+        return self.filter(
+            is_published=True
+        ).annotate(
+            author_full_name=Concat(
+                F('user__first_name'),
+                Value(' '),
+                F('user__last_name'),
+                Value(' ('),
+                F('user__username'),
+                Value(')'),
+            ),
+        ).order_by('-id')
+
+
 class Recipe(models.Model):
+    objects = RecipeManager()
     title = models.CharField(max_length=65, verbose_name=_('Title'))
     description = models.CharField(
         max_length=150,
