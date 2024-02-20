@@ -1,9 +1,8 @@
-import os
-
-from .models import Recipe
+from ..models import Recipe
 from utils.pagination import make_pagination
 from tag.models import Tag
 
+from django.conf import settings
 from django.shortcuts import get_list_or_404
 from django.http import Http404, JsonResponse
 from django.db.models import Q
@@ -11,9 +10,6 @@ from django.forms.models import model_to_dict
 from django.views.generic import ListView, DetailView
 from django.utils.translation import get_language
 from django.utils.translation import gettext as _
-
-RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE', 6))
-PAGES_TO_DISPLAY = int(os.environ.get('PAGES_TO_DISPLAY', 4))
 
 
 class RecipesListView(ListView):
@@ -36,8 +32,8 @@ class RecipesListView(ListView):
         pagination = make_pagination(
             request=self.request,
             obj_list=ctx['recipes'],
-            obj_per_page=RECIPES_PER_PAGE,
-            pages_to_display=PAGES_TO_DISPLAY
+            obj_per_page=settings.RECIPES_PER_PAGE,
+            pages_to_display=settings.PAGES_TO_DISPLAY
         )
         ctx.update({
             'recipes': pagination['page'],

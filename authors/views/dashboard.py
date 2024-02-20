@@ -1,13 +1,14 @@
 from recipes.models import Recipe
-from recipes.views import PAGES_TO_DISPLAY, RECIPES_PER_PAGE
 from utils.pagination import make_pagination
 from authors.forms.edit_recipe_form import RecipeEditForm
 from authors.forms.create_recipe_form import RecipeCreateForm
+
+from django.conf import settings
 from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
-from django.utils.translation import get_language
-from django.utils.text import slugify
 from django.contrib import messages
+from django.utils.text import slugify
+from django.utils.translation import get_language
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -20,8 +21,8 @@ def dashboard_view(req):
     pagination = make_pagination(
         request=req,
         obj_list=recipes,
-        obj_per_page=RECIPES_PER_PAGE,
-        pages_to_display=PAGES_TO_DISPLAY,
+        obj_per_page=settings.RECIPES_PER_PAGE,
+        pages_to_display=settings.PAGES_TO_DISPLAY,
     )
     return render(req, 'authors/pages/dashboardView.html', {
         'recipes': pagination['page'],

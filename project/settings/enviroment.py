@@ -28,3 +28,7 @@ ROOT_URLCONF = 'project.urls'
 WSGI_APPLICATION = 'project.wsgi.application'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# PAGINATION SETTINGS
+RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE'))
+PAGES_TO_DISPLAY = int(os.environ.get('PAGES_TO_DISPLAY'))
