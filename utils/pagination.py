@@ -9,7 +9,7 @@ def make_pagination_range(page_range, pages, current):
     total = len(page_range)
     if current >= total - middle_page:
         last_page = total
-        start_page = total - pages
+        start_page = 0 if (total - pages) < 0 else (total - pages)
     if current < middle_page:
         start_page = 0
         last_page = pages
