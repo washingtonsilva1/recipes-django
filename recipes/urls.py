@@ -38,6 +38,11 @@ urlpatterns = [
         views.RecipeDetailApiView.as_view(),
         name='detail_api'
     ),
+    path(
+        'recipes/api/',
+        views.recipes_api_list,
+        name='recipes_api_list'
+    )
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
