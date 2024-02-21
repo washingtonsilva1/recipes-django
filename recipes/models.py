@@ -36,7 +36,9 @@ class RecipeManager(models.Manager):
                 F('user__username'),
                 Value(')'),
             ),
-        ).order_by('-id')
+        ).order_by('-id').select_related(
+            'category',
+            'user').prefetch_related('tags')
 
 
 class Recipe(models.Model):
