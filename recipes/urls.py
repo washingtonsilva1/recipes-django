@@ -47,6 +47,11 @@ urlpatterns = [
         'recipes/api/<int:pk>',
         views.recipes_api_detail,
         name='recipes_api_detail'
+    ),
+    path(
+        'recipes/tags/api/<int:pk>/',
+        views.tags_api_detail,
+        name='tags_api_detail'
     )
 ]
 
