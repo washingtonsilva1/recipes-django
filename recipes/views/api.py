@@ -26,7 +26,10 @@ def recipes_api_detail(req, pk):
         return Response({
             'error_message': 'Recipe not found.'
         }, status=status.HTTP_404_NOT_FOUND)
-    serializer = RecipeSerializer(instance=recipe)
+    serializer = RecipeSerializer(
+        instance=recipe,
+        context={'request': req}
+    )
     return Response(serializer.data)
 
 
