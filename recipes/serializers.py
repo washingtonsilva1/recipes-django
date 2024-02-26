@@ -29,8 +29,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         read_only=True
     )
     author = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.all(),
         source='user',
+        read_only=True,
     )
     tags = serializers.HyperlinkedRelatedField(
         view_name='recipes:tags_api_detail',
