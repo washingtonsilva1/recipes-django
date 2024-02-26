@@ -8,15 +8,26 @@ from rest_framework.decorators import api_view
 from rest_framework.views import Response
 
 
-@api_view()
+@api_view(http_method_names=['GET', 'POST'])
 def recipes_api_list(req):
-    recipes = Recipe.objects.get_published()[:10]
-    serializer = RecipeSerializer(
-        instance=recipes,
-        many=True,
-        context={'request': req}
-    )
-    return Response(serializer.data)
+    if req.method == 'GET':
+        recipes = Recipe.objects.get_published()[:10]
+        serializer = RecipeSerializer(
+            instance=recipes,
+            many=True,
+            context={'request': req}
+        )
+        return Response(serializer.data)
+    elif req.method == 'POST':
+        serializer = RecipeSerializer(
+            data=req.data,
+        )
+        serializer.is_valid(raise_exception=True)
+        # Todo: if data is valid, then create recipe.
+        return Response(
+            serializer.validated_data,
+            status=status.HTTP_201_CREATED
+        )
 
 
 @api_view()
