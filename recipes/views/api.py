@@ -1,5 +1,6 @@
 from recipes.models import Recipe
 from recipes.serializers import RecipeSerializer
+from recipes.validators import RecipeValidator
 from tag.serializers import TagSerializer
 from tag.models import Tag
 
@@ -23,9 +24,9 @@ def recipes_api_list(req):
             data=req.data,
         )
         serializer.is_valid(raise_exception=True)
-        # Todo: if data is valid, then create recipe.
+        serializer.save()
         return Response(
-            serializer.validated_data,
+            serializer.data,
             status=status.HTTP_201_CREATED
         )
 
