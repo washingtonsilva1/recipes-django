@@ -1,6 +1,5 @@
 from recipes.models import Recipe
 from recipes.serializers import RecipeSerializer
-from recipes.validators import RecipeValidator
 from tag.serializers import TagSerializer
 from tag.models import Tag
 
