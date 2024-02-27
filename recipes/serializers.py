@@ -1,6 +1,6 @@
 from recipes.models import Recipe
+from recipes.validators import RecipeValidator
 from rest_framework import serializers
-from django.contrib.auth.models import User
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -15,6 +15,12 @@ class RecipeSerializer(serializers.ModelSerializer):
             'author',
             'published',
             'tags',
+            'preparation_time',
+            'preparation_time_unit',
+            'servings',
+            'servings_unit',
+            'preparation_steps',
+            'cover'
 
         ]
 
@@ -37,6 +43,14 @@ class RecipeSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True
     )
+
+    def validate(self, attrs):
+        validated_data = super().validate(attrs)
+        RecipeValidator(
+            data=validated_data,
+            errorClass=serializers.ValidationError
+        )
+        return validated_data
 
     def get_preparation(self, recipe):
         return f'{recipe.preparation_time} {recipe.preparation_time_unit}'
