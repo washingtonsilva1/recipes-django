@@ -1,5 +1,6 @@
 from django import forms
 from recipes.models import Recipe
+from recipes.validators import RecipeValidator
 from django.core.exceptions import ValidationError
 
 from django.utils.translation import gettext_lazy as _
@@ -69,15 +70,6 @@ class BaseRecipeForm(forms.ModelForm):
             },
         }
 
-    def clean_preparation_time(self):
-        preparation_time = self.cleaned_data.get('preparation_time', '')
-        if preparation_time < 1:
-            raise ValidationError(
-                message='Type a number bigger than zero.',
-                code='invalid'
-            )
-        return preparation_time
-
     def clean_preparation_time_unit(self):
         preparation_time_unit = self.cleaned_data.get(
             'preparation_time_unit',
@@ -92,15 +84,6 @@ class BaseRecipeForm(forms.ModelForm):
             )
         return preparation_time_unit
 
-    def clean_servings(self):
-        servings = self.cleaned_data.get('servings', '')
-        if servings < 1:
-            raise ValidationError(
-                message='Type a number bigger than zero.',
-                code='invalid'
-            )
-        return servings
-
     def clean_servings_unit(self):
         servings_unit = self.cleaned_data.get('servings_unit', '')
         field = self.fields.get('servings_unit')
@@ -112,24 +95,10 @@ class BaseRecipeForm(forms.ModelForm):
             )
         return servings_unit
 
-    def clean_description(self):
-        description = self.cleaned_data.get('description', '')
-        if len(description) < 10:
-            raise ValidationError(
-                message='Your description must have at least 10 characters.',
-                code='invalid'
-            )
-        return description
-
     def clean(self):
-        super_cleaned = super().clean()
-        title = self.cleaned_data.get('title', '')
-        description = self.cleaned_data.get('description', '')
-        if description.lower() == title.lower():
-            raise ValidationError({
-                'description': ValidationError(
-                    message='Your description and title can not be the same.',
-                    code='invalid'
-                )
-            })
-        return super_cleaned
+        super_clean = super().clean()
+        RecipeValidator(
+            data=super_clean,
+            errorClass=ValidationError
+        )
+        return super_clean
