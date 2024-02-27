@@ -14,3 +14,10 @@ def parse_str_to_list(string: str, sep=',') -> list:
     if not sep or not isinstance(sep, str):
         sep = ','
     return [s.strip() for s in string.split(sep) if s.strip()]
+
+
+def parse_str_to_int(string: str) -> int:
+    try:
+        return int(string)
+    except (ValueError, TypeError):
+        return -1
