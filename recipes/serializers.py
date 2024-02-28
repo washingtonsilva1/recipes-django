@@ -1,5 +1,6 @@
 from recipes.models import Recipe
-from recipes.validators import RecipeValidator
+from utils.utils import parse_str_to_int
+
 from rest_framework import serializers
 
 
@@ -45,12 +46,56 @@ class RecipeSerializer(serializers.ModelSerializer):
     )
 
     def validate(self, attrs):
+        print('validando tudo junto')
         validated_data = super().validate(attrs)
-        RecipeValidator(
-            data=validated_data,
-            errorClass=serializers.ValidationError
-        )
+        title = validated_data.get('title', '')
+        description = validated_data.get('description', '')
+        if description.lower() == title.lower():
+            raise serializers.ValidationError(
+                'Your description and title can not be the same.'
+            )
         return validated_data
+
+    def validate_title(self, value):
+        title = value
+        if len(title) < 8:
+            raise serializers.ValidationError(
+                'Your title must have at least 8 characters.'
+            )
+        recipe_from_db = Recipe.objects.filter(
+            title__iexact=title,
+        ).first()
+        if recipe_from_db is not None and \
+                recipe_from_db.pk != self.instance.pk:
+            raise serializers.ValidationError(
+                'A recipe with this title already exists, ' +
+                'try another one.',
+            )
+        return title
+
+    def validate_description(self, value):
+        description = value
+        if len(description) < 10:
+            raise serializers.ValidationError(
+                'Your description must have at least 10 characters.'
+            )
+        return description
+
+    def validate_servings(self, value):
+        servings = value
+        if parse_str_to_int(servings) < 1:
+            raise serializers.ValidationError(
+                'Type a number bigger than zero.'
+            )
+        return servings
+
+    def validate_preparation_time(self, value):
+        preparation_time = value
+        if parse_str_to_int(preparation_time) < 1:
+            raise serializers.ValidationError(
+                'Type a number bigger than zero.'
+            )
+        return preparation_time
 
     def get_preparation(self, recipe):
         return f'{recipe.preparation_time} {recipe.preparation_time_unit}'
