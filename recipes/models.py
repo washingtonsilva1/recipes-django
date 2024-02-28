@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django.db.models import F, Value, QuerySet
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.db.models.functions import Concat
 
@@ -110,3 +111,16 @@ class Recipe(models.Model):
             self.slug = slugify(self.title)
 
         return super().save(*args, **kwargs)
+
+    def clean(self, *args, **kwargs):
+        recipe_from_db = Recipe.objects.filter(
+            title__iexact=self.title
+        ).first()
+        if recipe_from_db is not None and recipe_from_db.pk != self.pk:
+            raise ValidationError({
+                'title': ValidationError(
+                    message='A recipe with this title already exists, ' +
+                    'try another one.',
+                    code='invalid'
+                )
+            })
