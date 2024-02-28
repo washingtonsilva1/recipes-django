@@ -44,13 +44,6 @@ class RecipesListView(ListView):
         return ctx
 
 
-class RecipeApiListView(RecipesListView):
-    def render_to_response(self, context, **response_kwargs):
-        queryset = self.get_context_data().get('recipes')
-        recipes = list(queryset.object_list.values())
-        return JsonResponse(recipes, safe=False)
-
-
 class RecipesHomeView(RecipesListView):
     template_name = 'recipes/pages/home.html'
 
