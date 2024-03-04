@@ -32,3 +32,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # PAGINATION SETTINGS
 RECIPES_PER_PAGE = int(os.environ.get('RECIPES_PER_PAGE'))
 PAGES_TO_DISPLAY = int(os.environ.get('PAGES_TO_DISPLAY'))
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10,
+}
