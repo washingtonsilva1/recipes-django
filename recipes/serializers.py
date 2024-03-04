@@ -50,7 +50,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         validated_data = super().validate(attrs)
         title = validated_data.get('title', '')
         description = validated_data.get('description', '')
-        if description.lower() == title.lower():
+        if title and description and \
+                description.lower() == title.lower():
             raise serializers.ValidationError(
                 'Your description and title can not be the same.'
             )
@@ -63,13 +64,14 @@ class RecipeSerializer(serializers.ModelSerializer):
                 'Your title must have at least 8 characters.'
             )
         recipe_from_db = Recipe.objects.filter(
-            title__iexact=title,
+            title__iexact=title
         ).first()
-        if recipe_from_db is not None and \
-                recipe_from_db.pk != self.instance.pk:
+        if (recipe_from_db and self.instance and
+            recipe_from_db.pk != self.instance.pk) or \
+                (recipe_from_db and not self.instance):
             raise serializers.ValidationError(
                 'A recipe with this title already exists, ' +
-                'try another one.',
+                'try another one.'
             )
         return title
 
