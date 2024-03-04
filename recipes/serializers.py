@@ -1,4 +1,6 @@
 from recipes.models import Recipe
+from tag.serializers import TagSerializer
+from tag.models import Tag
 from utils.utils import parse_str_to_int
 
 from rest_framework import serializers
@@ -39,10 +41,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         source='user',
         read_only=True,
     )
-    tags = serializers.HyperlinkedRelatedField(
-        view_name='recipes:tags_api_detail',
+    tags = TagSerializer(
+        data=Tag.objects.all(),
         many=True,
-        read_only=True
+        read_only=True,
     )
 
     def validate(self, attrs):
