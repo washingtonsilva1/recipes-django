@@ -39,7 +39,7 @@ urlpatterns = [
         name='recipes_api_list'
     ),
     path(
-        'recipes/api/<int:pk>',
+        'recipes/api/<int:pk>/',
         views.RecipesAPIDetailView.as_view(),
         name='recipes_api_detail'
     ),
