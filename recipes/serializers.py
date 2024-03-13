@@ -48,7 +48,6 @@ class RecipeSerializer(serializers.ModelSerializer):
     )
 
     def validate(self, attrs):
-        print('validando tudo junto')
         validated_data = super().validate(attrs)
         title = validated_data.get('title', '')
         description = validated_data.get('description', '')
