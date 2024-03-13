@@ -1,8 +1,16 @@
-from django.urls import path
 from . import views
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework.routers import SimpleRouter
 
+
+recipes_api_router = SimpleRouter()
+recipes_api_router.register(
+    '',
+    views.RecipesAPIViewSet,
+    basename='recipes-api'
+)
 
 app_name = 'recipes'
 
@@ -14,7 +22,7 @@ urlpatterns = [
         name='search'
     ),
     path(
-        'recipes/tags/<slug:slug>',
+        'recipes/tags/<slug:slug>/',
         views.RecipesTagView.as_view(),
         name='search_tag'
     ),
@@ -35,13 +43,7 @@ urlpatterns = [
     ),
     path(
         'recipes/api/',
-        views.RecipesAPIListView.as_view(),
-        name='recipes_api_list'
-    ),
-    path(
-        'recipes/api/<int:pk>/',
-        views.RecipesAPIDetailView.as_view(),
-        name='recipes_api_detail'
+        include(recipes_api_router.urls)
     ),
     path(
         'recipes/tags/api/<int:pk>/',
