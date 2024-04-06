@@ -24,7 +24,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             'servings_unit',
             'preparation_steps',
             'cover'
-
         ]
 
     published = serializers.BooleanField(
