@@ -21,6 +21,13 @@ class RecipesAPIViewSet(ModelViewSet):
     serializer_class = RecipeSerializer
     pagination_class = RecipesAPIPagination
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        category_id = self.request.query_params.get('category_id', '')
+        if category_id and category_id.isnumeric():
+            qs = qs.filter(category_id=category_id)
+        return qs
+
     def get_recipe(self, pk: int) -> Recipe:
         return get_object_or_404(
             Recipe,
@@ -43,7 +50,7 @@ class RecipesAPIViewSet(ModelViewSet):
         )
 
 
-@api_view()
+@ api_view()
 def tags_api_detail(req, pk):
     tag = Tag.objects.filter(pk=pk).first()
     if not tag:
