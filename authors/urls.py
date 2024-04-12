@@ -1,7 +1,14 @@
 from . import views
 from django.urls import path
-from django.http import HttpResponse
 
+from rest_framework.routers import SimpleRouter
+
+rest_framework_router = SimpleRouter()
+rest_framework_router.register(
+    'api',
+    viewset=views.AuthorsAPIViewSet,
+    basename='authors-api'
+)
 
 app_name = 'authors'
 
@@ -23,3 +30,5 @@ urlpatterns = [
     path('profile/<int:pk>/update/',
          views.ProfileUpdateView.as_view(), name='profile_update'),
 ]
+
+urlpatterns += rest_framework_router.urls
